@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>追问 — keep-asking quality funnel</title>
+<style>
+  :root {
+    --blue: #3b82f6;
+    --blue-dark: #1d4ed8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --gray-50: #fafafa;
+    --gray-100: #f4f4f5;
+    --gray-200: #e4e4e7;
+    --gray-300: #d4d4d8;
+    --gray-500: #71717a;
+    --gray-700: #3f3f46;
+    --gray-900: #18181b;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* Header */
+  .header { text-align: center; padding: 48px 0 24px; }
+  .header h1 {
+    font-size: 32px; font-weight: 700; letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--blue), var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .sub {
+    font-size: 14px; color: var(--gray-500); margin-top: 8px;
+  }
+  .header .tagline {
+    font-size: 16px; color: var(--gray-700); margin-top: 16px; font-weight: 500;
+  }
+
+  /* Progress Bar */
+  .progress-wrap { margin: 24px 0; }
+  .progress-bar {
+    display: flex; align-items: center; gap: 4px;
+    overflow-x: auto; padding: 4px 0;
+  }
+  .progress-step {
+    flex-shrink: 0; padding: 4px 12px; border-radius: 20px;
+    font-size: 12px; font-weight: 500; background: var(--gray-200); color: var(--gray-500);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .progress-step.active { background: var(--blue); color: white; }
+  .progress-step.done { background: var(--green); color: white; }
+  .progress-step.current { box-shadow: 0 0 0 2px var(--blue); }
+  .progress-line {
+    flex-shrink: 0; width: 12px; height: 2px; background: var(--gray-200);
+  }
+  .progress-line.done { background: var(--green); }
+
+  /* Card */
+  .card {
+    background: white; border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06); padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+  .card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .card-badge {
+    font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 10px;
+    background: var(--blue); color: white; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .card-badge.pre { background: var(--amber); }
+  .card-badge.ext { background: var(--gray-700); }
+  .card-title { font-size: 18px; font-weight: 600; }
+  .card-question {
+    font-size: 15px; color: var(--gray-700); padding: 12px 16px;
+    background: var(--gray-100); border-radius: 8px; margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  /* Question items */
+  .q-item {
+    border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px;
+    margin-bottom: 12px; transition: all 0.2s;
+  }
+  .q-item.passed { border-color: var(--green); background: #f0fdf4; }
+  .q-item.failed { border-color: var(--red); background: #fef2f2; }
+  .q-item .q-text { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .q-item .q-note { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
+  .q-item .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .q-item .q-actions button {
+    padding: 4px 16px; border: 1px solid var(--gray-300); border-radius: 6px;
+    font-size: 13px; cursor: pointer; background: white; transition: all 0.15s;
+  }
+  .q-item .q-actions button.pass-btn { color: var(--green); border-color: var(--green); }
+  .q-item .q-actions button.pass-btn:hover { background: var(--green); color: white; }
+  .q-item .q-actions button.fail-btn { color: var(--red); border-color: var(--red); }
+  .q-item .q-actions button.fail-btn:hover { background: var(--red); color: white; }
+  .q-item .q-actions .passed-label { color: var(--green); font-weight: 600; font-size: 13px; }
+  .q-item .q-actions .failed-label { color: var(--red); font-weight: 600; font-size: 13px; }
+
+  .stop-signal {
+    margin-top: 20px; padding: 14px 16px; border-radius: 8px;
+    background: #f0f9ff; border: 1px dashed var(--blue); font-size: 13px; color: var(--blue-dark);
+  }
+  .stop-signal strong { display: block; margin-bottom: 4px; }
+
+  /* Improvement input */
+  .improve-input-wrap {
+    margin-top: 12px; display: none;
+  }
+  .improve-input-wrap.show { display: block; }
+  .improve-input-wrap textarea {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300);
+    border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical;
+    min-height: 60px; outline: none; transition: border-color 0.2s;
+  }
+  .improve-input-wrap textarea:focus { border-color: var(--blue); }
+  .improve-input-wrap .save-btn {
+    margin-top: 8px; padding: 6px 20px; background: var(--blue); color: white;
+    border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500;
+  }
+  .improve-input-wrap .save-btn:hover { background: var(--blue-dark); }
+  .improve-input-wrap .saved-note { color: var(--green); font-size: 13px; font-weight: 500; margin-top: 6px; }
+
+  /* Layer actions */
+  .layer-actions {
+    display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;
+    border-top: 1px solid var(--gray-200); padding-top: 20px;
+  }
+  .layer-actions button {
+    padding: 8px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none; transition: all 0.15s;
+  }
+  .layer-actions .next-btn {
+    background: var(--blue); color: white;
+  }
+  .layer-actions .next-btn:hover { background: var(--blue-dark); }
+  .layer-actions .next-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Home buttons */
+  .home-btns { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+  .home-btn {
+    flex: 1; min-width: 200px; padding: 32px 24px; border-radius: var(--radius);
+    background: white; border: 2px solid var(--gray-200); cursor: pointer;
+    text-align: center; transition: all 0.2s;
+  }
+  .home-btn:hover { border-color: var(--blue); box-shadow: 0 4px 12px rgba(59,130,246,0.15); transform: translateY(-2px); }
+  .home-btn .icon { font-size: 36px; margin-bottom: 12px; }
+  .home-btn .label { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .home-btn .desc { font-size: 13px; color: var(--gray-500); }
+
+  /* Results */
+  .result-list { list-style: none; padding: 0; }
+  .result-list li {
+    padding: 12px 16px; border-left: 3px solid var(--blue);
+    background: var(--gray-100); margin-bottom: 8px; border-radius: 0 6px 6px 0;
+    font-size: 14px;
+  }
+  .result-list li .result-tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 1px 8px; border-radius: 4px; margin-right: 8px;
+  }
+  .result-list li .result-tag.p0 { background: #dbeafe; color: #1d4ed8; }
+  .result-list li .result-tag.p1 { background: #dcfce7; color: #15803d; }
+  .result-list li .result-tag.p2 { background: #fef9c3; color: #a16207; }
+  .result-list li .result-tag.p3 { background: #fce7f3; color: #be185d; }
+  .result-list li .result-tag.p4 { background: #f3e8ff; color: #7c3aed; }
+  .result-list li .result-tag.a { background: #dbeafe; color: #1d4ed8; }
+  .result-list li .result-tag.b { background: #dcfce7; color: #15803d; }
+  .result-list li .result-tag.c { background: #fef9c3; color: #a16207; }
+
+  .export-btn {
+    display: inline-block; padding: 10px 24px; background: var(--green); color: white;
+    border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 500;
+    margin-top: 16px;
+  }
+  .export-btn:hover { opacity: 0.9; }
+
+  .restart-btn {
+    display: inline-block; padding: 10px 24px; background: white; color: var(--gray-500);
+    border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; cursor: pointer;
+    margin-top: 16px; margin-left: 12px; font-weight: 500;
+  }
+  .restart-btn:hover { background: var(--gray-100); }
+
+  .hidden { display: none !important; }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .container { padding: 16px; }
+    .header { padding: 32px 0 16px; }
+    .header h1 { font-size: 26px; }
+    .card { padding: 20px 16px; }
+    .home-btn { min-width: 100%; }
+    .q-item .q-actions { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <!-- Header -->
+  <div class="header">
+    <h1>追问</h1>
+    <div class="sub">keep-asking</div>
+    <div class="tagline">不定义"什么是好"，追问出"哪里不够好"</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap hidden" id="progressWrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Screens -->
+  <div id="screenHome">
+    <p style="text-align:center;color:var(--gray-500);font-size:14px;margin-top:8px;">
+      一套结构化的追问框架，帮你系统性地逼近"好"。
+    </p>
+    <div class="home-btns">
+      <button class="home-btn" onclick="startFunnel('ref')">
+        <div class="icon">🔍</div>
+        <div class="label">我有参考样本</div>
+        <div class="desc">走标准 5 层追问路径（P0-P4）<br>先找靶 → 逻辑 → 目标 → 对比 → 边界 → 直觉</div>
+      </button>
+      <button class="home-btn" onclick="startFunnel('noref')">
+        <div class="icon">🧭</div>
+        <div class="label">我没有参考样本</div>
+        <div class="desc">走无参考系路径（A-B-C）<br>必要条件 → 极值定位 → 快速反馈</div>
+      </button>
+    </div>
+  </div>
+
+  <div id="screenFunnel" class="hidden"></div>
+  <div id="screenResult" class="hidden"></div>
+</div>
+
+<script>
+// ===== DATA =====
+
+const LAYERS_REF = [
+  {
+    id: 'pre', label: '前置·找靶', short: '前置',
+    question: '动手前先找优秀样本做参考',
+    badges: ['pre'],
+    items: [
+      { text: '搜靶：找到 3-5 个同类优秀样本（结构类似、跨领域也行）', note: '不一定要完全相同，关键是建立一个参考坐标' },
+      { text: '拆靶：分析好在哪里——结构、标准、细节特征', note: '不只是看结果，要提取出"它为什么好"的结构性原因' },
+      { text: '定靶：确定本次参考的主要靶子', note: '不是要超越它，是要有坐标系——过程中随时回看' }
+    ]
+  },
+  {
+    id: 'p0', label: 'P0 逻辑一致性', short: 'P0',
+    question: '这个产出有没有自相矛盾的地方？',
+    badges: ['P0'],
+    items: [
+      { text: '论点之间有先后关系 → "这里的主张和前面说的矛盾吗？"' },
+      { text: '多个标准并存 → "判断 A 用的标准和判断 B 用的标准一致吗？"' },
+      { text: '因果链条较长 → "推出这个结论需要哪几步前提？每一步站得住吗？"' }
+    ],
+    stop: '每个主张都能用同一套标准贯串。不出现"因为X所以Y但这里又因为notY所以Z"的循环。'
+  },
+  {
+    id: 'p1', label: 'P1 目标对齐', short: 'P1',
+    question: '这个产出真的在解决最初要解决的问题吗？',
+    badges: ['P1'],
+    items: [
+      { text: '方案已成型 → "最初要解决什么问题？现在的方案真的在解决它吗？"' },
+      { text: '有多个目标 → "这些目标之间有冲突吗？你在优先哪一个？为什么？"' },
+      { text: '受众不明确 → "这个产出给谁看的？他们关心什么？"' }
+    ],
+    stop: '产出的每个主要部分都能明确回答"它服务于哪个目标"。被追问时不会出现"顺手做的"这种回答。'
+  },
+  {
+    id: 'p2', label: 'P2 比较覆盖', short: 'P2',
+    question: '有没有被排除的选项？排除的理由站得住吗？',
+    badges: ['P2'],
+    items: [
+      { text: '方案已选定 → "为什么选 A 不选 B？排除 B 的理由是什么？"' },
+      { text: '貌似唯一解 → "真的只有这一种做法？有没有被你默认排除的选项？"' },
+      { text: '有明显权衡 → "选了 A 之后损失了什么？这个损失你能接受吗？"' }
+    ],
+    stop: '每个被排除的选项都有明确的可复述理由。不是"感觉A更好"，而是"因为X、Y、Z原因，A比B更适合这个场景"。'
+  },
+  {
+    id: 'p3', label: 'P3 边界排查', short: 'P3',
+    question: '极端情况下这个产出还能站住吗？',
+    badges: ['P3'],
+    items: [
+      { text: '输入有边界 → "如果输入比预期大/小/乱/极端，结果会怎样？"' },
+      { text: '场景假设 → "这个方案成立的前提假设是什么？如果假设不成立呢？"' },
+      { text: '鲁棒性 → "哪个环节最容易出问题？出问题后有没有回退方案？"' }
+    ],
+    stop: '能列出 3 个以上的可能故障点，每个都有应对预案（或明确声明"这个风险接受了"）。'
+  },
+  {
+    id: 'p4', label: 'P4 感官直觉', short: 'P4',
+    question: '去掉所有理由，只看结果本身，感觉对吗？',
+    badges: ['P4'],
+    items: [
+      { text: '审美判断 → "如果去掉所有解释，只看结果本身，你舒服吗？"' },
+      { text: '隐隐不对 → "有没有某个地方你觉得"怪怪的"但说不清为什么？"' },
+      { text: '整体感 → "把它和优秀的同类并列放在一起，它会显得突兀吗？"' }
+    ],
+    stop: '完全没有任何"隐隐的不对劲"残留。如果感觉说"还不对"，退回 P0-P3 去排查具体原因。'
+  }
+];
+
+const LAYERS_NOREF = [
+  {
+    id: 'a', label: 'A层 必要条件', short: 'A层',
+    question: '这个产出最不能违背什么？',
+    badges: ['ext', 'A'],
+    items: [
+      { text: '全新领域 → "如果不允许失败，哪些条件是必须满足的？"' },
+      { text: '约束不清晰 → "哪些是硬约束（不满足就不可接受），哪些是软约束（可以妥协）？"' },
+      { text: '目标模糊 → "哪怕其他方面都很差，唯一不能搞砸的是哪一点？"' }
+    ],
+    stop: '列出不可违背清单，每条都能明确回答"违反了会怎样"。'
+  },
+  {
+    id: 'b', label: 'B层 极值定位', short: 'B层',
+    question: '最好和最差之间，我站在哪里？',
+    badges: ['ext', 'B'],
+    items: [
+      { text: '没有坐标 → "最差结果长什么样？最好结果（不考虑成本）长什么样？"' },
+      { text: '资源有限 → "在当前资源下，这两个极端之间哪个点最合理？"' },
+      { text: '决策纠结 → "如果我往左偏和往右偏，分别会多付出/损失什么？"' }
+    ],
+    stop: '能画出"极差↔合理↔极好"的坐标轴，并标注自己的位置以及选择理由。'
+  },
+  {
+    id: 'c', label: 'C层 快速反馈', short: 'C层',
+    question: '真实世界怎么说？',
+    badges: ['ext', 'C'],
+    items: [
+      { text: '无样本 → "最小可验证版本是什么？最快多久能拿到第一个反馈？"' },
+      { text: '假设过多 → "这条假设如果不成立，最快要多久能验证出来？"' },
+      { text: '方向不确定 → "需要多少人/多少次反馈才能判断方向对了？"' }
+    ],
+    stop: '收到 2-3 个独立反馈后，能明确说出"哪个方向对了/错了"。'
+  }
+];
+
+// ===== STATE =====
+
+let state = {
+  mode: null,       // 'ref' | 'noref'
+  currentLayer: 0,
+  layers: [],
+  improvements: []  // [{layer, itemIndex, text}]
+};
+
+// ===== RENDER =====
+
+function render() {
+  const layers = state.layers;
+  const idx = state.currentLayer;
+  const layer = layers[idx];
+  const done = idx >= layers.length;
+
+  if (done) {
+    renderResult();
+    return;
+  }
+
+  renderProgress(layers, idx);
+  renderFunnel(layer, idx, layers);
+}
+
+function renderProgress(layers, currentIdx) {
+  const wrap = document.getElementById('progressWrap');
+  const bar = document.getElementById('progressBar');
+  wrap.classList.remove('hidden');
+
+  bar.innerHTML = '';
+  layers.forEach((l, i) => {
+    const step = document.createElement('span');
+    step.className = 'progress-step';
+    if (i < currentIdx) step.classList.add('done');
+    if (i === currentIdx) {
+      step.classList.add('active', 'current');
+    }
+    step.textContent = l.short || l.label;
+    bar.appendChild(step);
+
+    if (i < layers.length - 1) {
+      const line = document.createElement('span');
+      line.className = 'progress-line';
+      if (i < currentIdx) line.classList.add('done');
+      bar.appendChild(line);
+    }
+  });
+}
+
+function renderFunnel(layer, idx, layers) {
+  showScreen('screenFunnel');
+  const el = document.getElementById('screenFunnel');
+
+  // Build items HTML
+  let itemsHtml = '';
+  layer.items.forEach((item, i) => {
+    const saved = state.improvements.find(imp => imp.layer === (idx + '-' + i));
+    const statusClass = saved ? (saved.text ? 'failed' : 'passed') : '';
+    const savedLabel = saved
+      ? (saved.text
+          ? `<span class="failed-label">✗ 需要改进</span>`
+          : `<span class="passed-label">✓ 已确认</span>`)
+      : '';
+
+    itemsHtml += `
+      <div class="q-item ${statusClass}" data-idx="${i}">
+        <div class="q-text">${item.text}</div>
+        ${item.note ? `<div class="q-note">💡 ${item.note}</div>` : ''}
+        <div class="q-actions" id="qactions-${idx}-${i}">
+          ${saved
+            ? savedLabel
+            : `<button class="pass-btn" onclick="markPass(${idx},${i})">✓ 没问题</button>
+               <button class="fail-btn" onclick="showImprove(${idx},${i})">✗ 需要改进</button>`
+          }
+        </div>
+        <div class="improve-input-wrap" id="improve-${idx}-${i}">
+          <textarea placeholder="记录具体改进点..." id="improveText-${idx}-${i}"></textarea>
+          <button class="save-btn" onclick="saveImprove(${idx},${i})">保存</button>
+          <div class="saved-note hidden" id="savedNote-${idx}-${i}">✓ 已保存</div>
+        </div>
+      </div>`;
+  });
+
+  // Badges
+  const badgesHtml = (layer.badges || []).map(b => `<span class="card-badge ${b === 'pre' ? 'pre' : b === 'ext' ? 'ext' : ''}">${b}</span>`).join('');
+
+  const isLast = idx === layers.length - 1;
+  const canProceed = layer.items.every((_, i) =>
+    state.improvements.some(imp => imp.layer === (idx + '-' + i))
+  );
+
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        ${badgesHtml}
+        <div class="card-title">${layer.label}</div>
+      </div>
+      <div class="card-question">${layer.question}</div>
+      ${itemsHtml}
+      ${layer.stop ? `<div class="stop-signal"><strong>🛑 终止信号：</strong>${layer.stop}</div>` : ''}
+      <div class="layer-actions">
+        <button class="next-btn" onclick="nextLayer()" ${!canProceed ? 'disabled' : ''}>
+          ${isLast ? '📋 查看结果' : '下一步 →'}
+        </button>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--gray-500);">
+      ${idx + 1} / ${layers.length} · 所有项目确认后方可进入下一步
+    </p>
+  `;
+}
+
+function renderResult() {
+  showScreen('screenResult');
+  const el = document.getElementById('screenResult');
+
+  const hasIssues = state.improvements.some(imp => imp.text);
+
+  let listHtml = '';
+  if (hasIssues) {
+    listHtml = '<h3 style="margin-bottom:16px;">📋 改进清单</h3><ul class="result-list">';
+    state.improvements.forEach(imp => {
+      if (!imp.text) return;
+      const layerId = imp.layer.split('-')[0];
+      const layer = state.layers.find(l => l.id === layerId);
+      const tag = layer ? (layer.short || layer.id) : layerId;
+      const tagClass = (layerId === 'pre') ? 'p0' : layerId;
+      listHtml += `<li><span class="result-tag ${tagClass}">${tag}</span>${imp.text}</li>`;
+    });
+    listHtml += '</ul>';
+  } else {
+    listHtml = `
+      <div style="text-align:center;padding:32px 0;">
+        <div style="font-size:48px;margin-bottom:16px;">✨</div>
+        <h3 style="margin-bottom:8px;">全部通过</h3>
+        <p style="color:var(--gray-500);font-size:14px;">每一层都没有发现"不够好"的地方。可以放心交付了。</p>
+      </div>
+    `;
+  }
+
+  // Summary stats
+  const total = state.improvements.length;
+  const issues = state.improvements.filter(i => i.text).length;
+  const clean = total - issues;
+
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-badge" style="background:var(--green);">结果</span>
+        <div class="card-title">追问完成</div>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">
+        共检查 ${layers.length} 层 · ${state.layers.length > 0 ? state.layers.map(l => l.short || l.id).join(' → ') : ''}
+      </p>
+      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+        <div style="flex:1;text-align:center;padding:12px;background:#f0fdf4;border-radius:8px;">
+          <div style="font-size:24px;font-weight:700;color:var(--green);">${clean}</div>
+          <div style="font-size:12px;color:var(--gray-500);">已确认无问题</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:12px;background:${hasIssues ? '#fef2f2' : '#f0fdf4'};border-radius:8px;">
+          <div style="font-size:24px;font-weight:700;color:${hasIssues ? 'var(--red)' : 'var(--green)'};">${issues}</div>
+          <div style="font-size:12px;color:var(--gray-500);">需改进项</div>
+        </div>
+      </div>
+      ${listHtml}
+      <div style="margin-top:24px;display:flex;flex-wrap:wrap;">
+        <button class="export-btn" onclick="exportResult()">📥 导出清单</button>
+        <button class="restart-btn" onclick="resetAll()">🔄 重新开始</button>
+      </div>
+    </div>
+  `;
+}
+
+// ===== ACTIONS =====
+
+function startFunnel(mode) {
+  state.mode = mode;
+  state.currentLayer = 0;
+  state.improvements = [];
+  state.layers = mode === 'ref' ? LAYERS_REF : LAYERS_NOREF;
+  render();
+}
+
+function markPass(layerIdx, itemIdx) {
+  // Remove any previous entry
+  state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx + '-' + itemIdx));
+  state.improvements.push({ layer: layerIdx + '-' + itemIdx, itemIndex: itemIdx, text: '' });
+  render();
+}
+
+function showImprove(layerIdx, itemIdx) {
+  const wrap = document.getElementById(`improve-${layerIdx}-${itemIdx}`);
+  if (wrap) wrap.classList.add('show');
+}
+
+function saveImprove(layerIdx, itemIdx) {
+  const textarea = document.getElementById(`improveText-${layerIdx}-${itemIdx}`);
+  const note = document.getElementById(`savedNote-${layerIdx}-${itemIdx}`);
+  const text = textarea.value.trim() || '需要改进（未记录具体内容）';
+
+  state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx + '-' + itemIdx));
+  state.improvements.push({ layer: layerIdx + '-' + itemIdx, itemIndex: itemIdx, text });
+  note.classList.remove('hidden');
+  textarea.disabled = true;
+  render();
+}
+
+function nextLayer() {
+  state.currentLayer++;
+  render();
+}
+
+function showScreen(id) {
+  ['screenHome', 'screenFunnel', 'screenResult'].forEach(s => {
+    document.getElementById(s).classList.toggle('hidden', s !== id);
+  });
+}
+
+function resetAll() {
+  state = { mode: null, currentLayer: 0, layers: [], improvements: [] };
+  document.getElementById('progressWrap').classList.add('hidden');
+  showScreen('screenHome');
+}
+
+function exportResult() {
+  const issues = state.improvements.filter(i => i.text);
+  if (issues.length === 0) {
+    alert('全部通过，无需导出。');
+    return;
+  }
+
+  let text = '# 追问改进清单\n\n';
+  let i = 1;
+  issues.forEach(imp => {
+    const layerId = imp.layer.split('-')[0];
+    const layer = state.layers.find(l => l.id === layerId);
+    const tag = layer ? (layer.short || layer.label) : layerId;
+    text += `${i}. [${tag}] ${imp.text}\n`;
+    i++;
+  });
+
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'keep-asking-checklist.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ===== INIT =====
+
+const layers = []; // placeholder for result screen use
+showScreen('screenHome');
+</script>
+
+</body>
+</html>
