@@ -45,6 +45,7 @@
   .hero-icon {
     width: 64px; height: 64px; margin: 0 auto 24px;
     position: relative; z-index: 1;
+    animation: pulse-soft 4s ease-in-out infinite;
   }
   .hero-icon svg { width: 100%; height: 100%; }
   .hero h1 {
@@ -201,6 +202,8 @@
   .improve-input-wrap { margin-top: 12px; display: none; }
   .improve-input-wrap.show { display: block; animation: fadeSlideIn 0.25s ease; }
   @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse-soft { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.06); opacity: 1; } }
+  @keyframes screenFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .improve-input-wrap textarea {
     width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px;
     font-size: 13px; font-family: inherit; resize: vertical; min-height: 64px;
@@ -530,7 +533,7 @@ function renderFunnel(layer, idx, layers) {
   const isLast = idx === layers.length-1;
   const isFirst = idx === 0;
   const canProceed = layer.items.every((_,i) => state.improvements.some(imp => imp.layer === (idx+'-'+i)));
-  el.innerHTML = `<div class="card">
+  el.innerHTML = `<div class="card" style="animation:screenFadeIn 0.35s ease">
     <div class="card-header">
       <div class="card-title">${layer.label}</div>
       <span class="card-counter">${idx+1}/${layers.length}</span>
@@ -575,15 +578,15 @@ function renderResult() {
   const total = state.improvements.length;
   const issues = state.improvements.filter(i=>i.text).length;
   const clean = total - issues;
-  el.innerHTML = `<div class="card">
+  el.innerHTML = `<div class="card" style="animation:screenFadeIn 0.35s ease">
     <div class="card-header"><span class="card-badge" style="background:var(--green);">结果</span><div class="card-title">追问完成</div></div>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">共检查 ${state.layers.length} 层</p>
     <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
       <div style="flex:1;text-align:center;padding:14px;background:rgba(52,211,153,0.06);border-radius:10px;border:1px solid rgba(52,211,153,0.1);">
-        <div style="font-size:28px;font-weight:700;color:var(--green);">${clean}</div><div style="font-size:12px;color:var(--text-muted);">已确认</div>
+        <div id="numClean" style="font-size:28px;font-weight:700;color:var(--green);">0</div><div style="font-size:12px;color:var(--text-muted);">已确认</div>
       </div>
       <div style="flex:1;text-align:center;padding:14px;background:${hasIssues?'rgba(248,113,113,0.06)':'rgba(52,211,153,0.06)'};border-radius:10px;border:1px solid ${hasIssues?'rgba(248,113,113,0.1)':'rgba(52,211,153,0.1)'};">
-        <div style="font-size:28px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">${issues}</div><div style="font-size:12px;color:var(--text-muted);">需改进</div>
+        <div id="numIssues" style="font-size:28px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">0</div><div style="font-size:12px;color:var(--text-muted);">需改进</div>
       </div>
     </div>
     ${listHtml}
@@ -592,6 +595,11 @@ function renderResult() {
       <button class="restart-btn" onclick="resetAll()">重新开始</button>
     </div>
   </div>`;
+  // Animate counter numbers
+  setTimeout(() => {
+    animateCount('numClean', ${clean});
+    animateCount('numIssues', ${issues});
+  }, 100);
   clearState();
 }
 
@@ -618,6 +626,20 @@ function showScreen(id) {
   ['screenHome','screenPreflight','screenFunnel','screenResult'].forEach(s => {
     document.getElementById(s).classList.toggle('hidden', s !== id);
   });
+}
+function animateCount(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const duration = 600;
+  const startTime = performance.now();
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = target;
+    if (progress < 1) { el.textContent = Math.round(target * eased); requestAnimationFrame(tick); }
+  }
+  requestAnimationFrame(tick);
 }
 function resetAll() {
   state = { mode:null, currentLayer:0, layers:[], improvements:[] };
