@@ -6,287 +6,157 @@
 <title>无穷追问 — persistent-asking quality funnel</title>
 <style>
   :root {
-    --accent: #6366f1;
-    --accent-light: #818cf8;
-    --accent-dark: #4f46e5;
-    --green: #10b981;
-    --green-dark: #059669;
-    --red: #ef4444;
-    --amber: #f59e0b;
-    --gray-50: #f8fafc;
-    --gray-100: #f1f5f9;
-    --gray-200: #e2e8f0;
-    --gray-300: #cbd5e1;
-    --gray-400: #94a3b8;
-    --gray-500: #64748b;
-    --gray-600: #475569;
-    --gray-700: #334155;
-    --gray-900: #0f172a;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --accent: #6366f1; --accent-light: #818cf8; --accent-dark: #4f46e5;
+    --green: #10b981; --green-dark: #059669; --red: #ef4444; --amber: #f59e0b;
+    --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-200: #e2e8f0; --gray-300: #cbd5e1;
+    --gray-400: #94a3b8; --gray-500: #64748b; --gray-600: #475569; --gray-700: #334155; --gray-900: #0f172a;
+    --radius: 12px; --radius-sm: 8px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: var(--gray-50);
-    color: var(--gray-900);
-    line-height: 1.6;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    background: var(--gray-50); color: var(--gray-900); line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased;
   }
   .container { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
 
-  /* ===== HERO ===== */
-  .hero {
-    text-align: center; padding: 48px 0 12px;
-    position: relative; overflow: hidden;
-  }
+  .hero { text-align: center; padding: 48px 0 12px; position: relative; overflow: hidden; }
   .hero h1 {
     font-size: 38px; font-weight: 800; letter-spacing: -1px; line-height: 1.15;
     background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 12px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px;
   }
-  .hero .sub {
-    font-size: 13px; color: var(--gray-400); margin-bottom: 16px;
-    letter-spacing: 0.5px;
-  }
-  .hero .tagline {
-    font-size: 17px; color: var(--gray-600); font-weight: 400;
-    max-width: 460px; margin: 0 auto 28px;
-  }
+  .hero .sub { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; letter-spacing: 0.5px; }
+  .hero .tagline { font-size: 17px; color: var(--gray-600); max-width: 460px; margin: 0 auto 28px; }
   .hero .tagline em { font-style: normal; color: var(--accent); font-weight: 600; }
   .hero-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 32px; background: var(--accent); color: white;
-    border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
-    cursor: pointer; transition: all 0.2s ease;
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--accent); color: white;
+    border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
     box-shadow: 0 4px 14px rgba(99,102,241,0.3);
   }
   .hero-cta:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.35); }
-  .hero-cta:active { transform: translateY(0); }
 
-  /* ===== WHY ===== */
-  .why {
-    max-width: 520px; margin: 28px auto 16px;
-    text-align: center;
-  }
-  .why p {
-    font-size: 14px; color: var(--gray-500); line-height: 1.8;
-  }
+  .why { max-width: 520px; margin: 28px auto 16px; text-align: center; }
+  .why p { font-size: 14px; color: var(--gray-500); line-height: 1.8; }
 
-  /* ===== HOW IT WORKS ===== */
   .how-section { margin: 32px 0; }
-  .how-title {
-    font-size: 13px; font-weight: 600; color: var(--gray-400);
-    text-transform: uppercase; letter-spacing: 1.5px;
-    margin-bottom: 16px; text-align: center;
-  }
-  .how-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-  }
+  .how-title { font-size: 13px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; text-align: center; }
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .how-card {
-    background: white; border-radius: var(--radius);
-    padding: 26px 22px; border: 1px solid var(--gray-200);
-    transition: all 0.2s ease; cursor: pointer;
-    position: relative; overflow: hidden;
+    background: white; border-radius: var(--radius); padding: 26px 22px; border: 1px solid var(--gray-200);
+    transition: all 0.2s ease; cursor: pointer; position: relative; overflow: hidden;
   }
-  .how-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    transition: opacity 0.2s;
-  }
+  .how-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .how-card.ref-card::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
   .how-card.noref-card::before { background: linear-gradient(90deg, var(--amber), #fbbf24); }
-  .how-card:hover {
-    border-color: var(--accent-light); box-shadow: var(--shadow-md); transform: translateY(-2px);
-  }
-  .how-card .icon-wrap {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 38px; height: 38px; border-radius: 10px;
-    font-size: 18px; margin-bottom: 14px;
-  }
+  .how-card:hover { border-color: var(--accent-light); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .how-card .icon-wrap { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; font-size: 18px; margin-bottom: 14px; }
   .how-card.ref-card .icon-wrap { background: rgba(99,102,241,0.1); }
   .how-card.noref-card .icon-wrap { background: rgba(245,158,11,0.1); }
   .how-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
   .how-card p { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
-  .how-card .steps-preview {
-    margin-top: 12px; font-size: 12px; color: var(--gray-400);
-    display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
-  }
+  .how-card .steps-preview { margin-top: 12px; font-size: 12px; color: var(--gray-400); display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
   .how-card .steps-preview .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gray-300); display: inline-block; margin: 0 2px; }
+  @media (max-width: 600px) { .how-grid { grid-template-columns: 1fr; } }
 
-  @media (max-width: 600px) {
-    .how-grid { grid-template-columns: 1fr; }
+  /* ===== PRE-FLIGHT (找靶确认) ===== */
+  .preflight { margin-top: 16px; }
+  .preflight-card {
+    background: white; border-radius: var(--radius); padding: 28px 24px; border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
   }
+  .preflight-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+  .preflight-card .steps { margin-bottom: 20px; }
+  .preflight-card .steps li { font-size: 14px; color: var(--gray-600); margin-bottom: 10px; line-height: 1.6; list-style: none; padding-left: 20px; position: relative; }
+  .preflight-card .steps li::before { content: '\2460'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-size: 13px; }
+  .preflight-card .steps li:nth-child(2)::before { content: '\2461'; }
+  .preflight-card .steps li:nth-child(3)::before { content: '\2462'; }
+  .preflight-card .steps li em { font-style: normal; color: var(--accent); font-weight: 500; }
+  .preflight-card .preflight-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .preflight-card .preflight-actions button {
+    padding: 10px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none; transition: all 0.12s ease;
+  }
+  .preflight-card .preflight-actions .ready-btn { background: var(--accent); color: white; }
+  .preflight-card .preflight-actions .ready-btn:hover { background: var(--accent-dark); }
+  .preflight-card .preflight-actions .skip-btn { background: white; color: var(--gray-500); border: 1px solid var(--gray-300); }
+  .preflight-card .preflight-actions .skip-btn:hover { background: var(--gray-100); }
 
-  /* ===== FOOTER ===== */
-  .footer {
-    margin-top: 40px; text-align: center; padding-top: 20px;
-    border-top: 1px solid var(--gray-200);
-  }
+  .footer { margin-top: 40px; text-align: center; padding-top: 20px; border-top: 1px solid var(--gray-200); }
   .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-  .footer-links a {
-    font-size: 13px; color: var(--gray-500); text-decoration: none;
-    transition: color 0.2s;
-  }
+  .footer-links a { font-size: 13px; color: var(--gray-500); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
   .footer p { font-size: 12px; color: var(--gray-400); margin-top: 10px; }
 
-  /* ===== PROGRESS ===== */
   .progress-wrap { margin: 24px 0; }
-  .progress-bar {
-    display: flex; align-items: center; gap: 4px;
-    overflow-x: auto; padding: 4px 0; scrollbar-width: none;
-  }
+  .progress-bar { display: flex; align-items: center; gap: 4px; overflow-x: auto; padding: 4px 0; scrollbar-width: none; }
   .progress-bar::-webkit-scrollbar { display: none; }
-  .progress-step {
-    flex-shrink: 0; padding: 4px 12px; border-radius: 20px;
-    font-size: 12px; font-weight: 500; background: var(--gray-200); color: var(--gray-500);
-    transition: all 0.3s ease; white-space: nowrap;
-  }
+  .progress-step { flex-shrink: 0; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; background: var(--gray-200); color: var(--gray-500); transition: all 0.3s ease; white-space: nowrap; }
   .progress-step.active { background: var(--accent); color: white; }
   .progress-step.done { background: var(--green); color: white; }
   .progress-step.current { box-shadow: 0 0 0 2px var(--accent); }
-  .progress-line {
-    flex-shrink: 0; width: 12px; height: 2px; background: var(--gray-200);
-    transition: background 0.3s;
-  }
+  .progress-line { flex-shrink: 0; width: 12px; height: 2px; background: var(--gray-200); transition: background 0.3s; }
   .progress-line.done { background: var(--green); }
 
-  /* ===== CARD ===== */
-  .card {
-    background: white; border-radius: var(--radius);
-    box-shadow: var(--shadow-sm); padding: 28px 24px;
-    margin-bottom: 16px; border: 1px solid var(--gray-200);
-  }
-  .card-header {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
-  }
-  .card-badge {
-    font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
-    background: var(--accent); color: white; text-transform: uppercase; letter-spacing: 0.5px;
-    line-height: 1.4;
-  }
+  .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 28px 24px; margin-bottom: 16px; border: 1px solid var(--gray-200); }
+  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--accent); color: white; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.4; }
   .card-badge.pre { background: var(--amber); }
   .card-badge.ext { background: var(--gray-600); }
   .card-title { font-size: 18px; font-weight: 700; }
-  .card-counter {
-    margin-left: auto; font-size: 12px; color: var(--gray-400); font-weight: 500;
-  }
-  .card-question {
-    font-size: 15px; color: var(--gray-700); padding: 12px 16px;
-    background: var(--gray-100); border-radius: var(--radius-sm); margin-bottom: 20px;
-    font-weight: 500; border-left: 3px solid var(--accent);
-  }
+  .card-counter { margin-left: auto; font-size: 12px; color: var(--gray-400); font-weight: 500; }
+  .card-question { font-size: 15px; color: var(--gray-700); padding: 12px 16px; background: var(--gray-100); border-radius: var(--radius-sm); margin-bottom: 20px; font-weight: 500; border-left: 3px solid var(--accent); }
 
-  /* ===== QUESTION ITEMS ===== */
-  .q-item {
-    border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px;
-    margin-bottom: 10px; transition: all 0.15s ease;
-  }
+  .q-item { border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px; margin-bottom: 10px; transition: all 0.15s ease; }
   .q-item.passed { border-color: var(--green); background: #f0fdf4; }
   .q-item.failed { border-color: var(--red); background: #fef2f2; }
   .q-item .q-text { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
-  .q-item .q-note {
-    font-size: 12px; color: var(--gray-500); background: var(--gray-50);
-    padding: 8px 10px; border-radius: 6px; margin-bottom: 10px; line-height: 1.5;
-  }
+  .q-item .q-note { font-size: 12px; color: var(--gray-500); background: var(--gray-50); padding: 8px 10px; border-radius: 6px; margin-bottom: 10px; line-height: 1.5; }
   .q-item .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .q-item .q-actions button {
-    padding: 5px 18px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
-    font-size: 13px; cursor: pointer; background: white; transition: all 0.12s ease;
-    font-weight: 500;
-  }
+  .q-item .q-actions button { padding: 5px 18px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); font-size: 13px; cursor: pointer; background: white; transition: all 0.12s ease; font-weight: 500; }
   .q-item .q-actions button.pass-btn { color: var(--green); border-color: var(--green); }
   .q-item .q-actions button.pass-btn:hover { background: var(--green); color: white; }
   .q-item .q-actions button.fail-btn { color: var(--red); border-color: var(--red); }
   .q-item .q-actions button.fail-btn:hover { background: var(--red); color: white; }
-  .q-item .q-actions .status-label { font-size: 13px; font-weight: 600; padding: 4px 0; }
-  .q-item .q-actions .status-label.pass { color: var(--green); }
-  .q-item .q-actions .status-label.fail { color: var(--red); }
+  .q-item .q-actions .s-label { font-size: 13px; font-weight: 600; padding: 4px 0; }
+  .q-item .q-actions .s-label.pass { color: var(--green); }
+  .q-item .q-actions .s-label.fail { color: var(--red); }
 
-  .stop-signal {
-    margin-top: 18px; padding: 14px 16px; border-radius: 8px;
-    background: #eef2ff; border: 1px dashed var(--accent); font-size: 13px; color: var(--accent-dark); line-height: 1.5;
-  }
+  .stop-signal { margin-top: 18px; padding: 14px 16px; border-radius: 8px; background: #eef2ff; border: 1px dashed var(--accent); font-size: 13px; color: var(--accent-dark); line-height: 1.5; }
   .stop-signal::before { content: '\26A0\FE0F  '; }
 
-  /* ===== IMPROVEMENT INPUT ===== */
   .improve-input-wrap { margin-top: 12px; display: none; }
   .improve-input-wrap.show { display: block; animation: fadeSlideIn 0.2s ease; }
-  @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .improve-input-wrap textarea {
-    width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300);
-    border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical;
-    min-height: 60px; outline: none; transition: border-color 0.2s;
-  }
+  @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .improve-input-wrap textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 60px; outline: none; transition: border-color 0.2s; }
   .improve-input-wrap textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
-  .improve-input-wrap .save-btn {
-    margin-top: 8px; padding: 6px 20px; background: var(--accent); color: white;
-    border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500;
-    transition: background 0.15s;
-  }
+  .improve-input-wrap .save-btn { margin-top: 8px; padding: 6px 20px; background: var(--accent); color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500; transition: background 0.15s; }
   .improve-input-wrap .save-btn:hover { background: var(--accent-dark); }
 
-  /* ===== LAYER ACTIONS ===== */
-  .layer-actions {
-    display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;
-    border-top: 1px solid var(--gray-200); padding-top: 20px;
-  }
-  .layer-actions button {
-    padding: 8px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500;
-    cursor: pointer; border: none; transition: all 0.12s ease;
-  }
+  .layer-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; border-top: 1px solid var(--gray-200); padding-top: 20px; flex-wrap: wrap; }
+  .layer-actions button { padding: 8px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.12s ease; }
+  .layer-actions .back-btn { background: white; color: var(--gray-500); border: 1px solid var(--gray-300); }
+  .layer-actions .back-btn:hover { background: var(--gray-100); }
   .layer-actions .next-btn { background: var(--accent); color: white; }
   .layer-actions .next-btn:hover { background: var(--accent-dark); }
   .layer-actions .next-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .layer-actions .footer-hint {
-    font-size: 12px; color: var(--gray-400); margin-right: auto; align-self: center;
-  }
 
-  /* ===== RESULTS ===== */
-  .result-list { list-style: none; padding: 0; }
-  .result-list li {
-    padding: 12px 16px; border-left: 3px solid var(--accent);
-    background: var(--gray-100); margin-bottom: 8px; border-radius: 0 8px 8px 0;
-    font-size: 14px; line-height: 1.5;
-  }
-  .result-list li .result-tag {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    padding: 1px 8px; border-radius: 4px; margin-right: 8px;
-  }
-  .result-list li .result-tag.p0 { background: #e0e7ff; color: var(--accent-dark); }
-  .result-list li .result-tag.p1 { background: #d1fae5; color: #065f46; }
-  .result-list li .result-tag.p2 { background: #fef3c7; color: #92400e; }
-  .result-list li .result-tag.p3 { background: #fce7f3; color: #9d174d; }
-  .result-list li .result-tag.p4 { background: #ede9fe; color: #6d28d9; }
-  .result-list li .result-tag.a { background: #e0e7ff; color: var(--accent-dark); }
-  .result-list li .result-tag.b { background: #d1fae5; color: #065f46; }
-  .result-list li .result-tag.c { background: #fef3c7; color: #92400e; }
+  .result-list { list-style: none; padding: 0; margin-bottom: 16px; }
+  .result-list li { padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--gray-100); margin-bottom: 8px; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.5; }
+  .result-list li:hover { background: var(--gray-200); }
+  .result-list li .r-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 8px; text-transform: uppercase; letter-spacing: 0.3px; vertical-align: middle; }
+  .result-list li .r-tag.p0 { background: var(--red); color: white; }
+  .result-list li .r-tag.p1 { background: var(--amber); color: white; }
+  .result-list li .r-tag.p2 { background: var(--gray-400); color: white; }
 
-  .export-btn, .restart-btn {
-    display: inline-block; padding: 10px 24px; border-radius: var(--radius-sm);
-    font-size: 14px; cursor: pointer; font-weight: 500; transition: all 0.12s;
-    margin-top: 16px;
-  }
-  .export-btn {
-    background: var(--green); color: white; border: none;
-  }
+  .export-btn, .restart-btn { display: inline-block; padding: 10px 24px; border-radius: var(--radius-sm); font-size: 14px; cursor: pointer; font-weight: 500; transition: all 0.12s; margin-top: 16px; }
+  .export-btn { background: var(--green); color: white; border: none; }
   .export-btn:hover { background: var(--green-dark); }
-  .restart-btn {
-    background: white; color: var(--gray-500); border: 1px solid var(--gray-300);
-    margin-left: 10px;
-  }
+  .restart-btn { background: white; color: var(--gray-500); border: 1px solid var(--gray-300); margin-left: 10px; }
   .restart-btn:hover { background: var(--gray-100); }
 
   .hidden { display: none !important; }
 
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 500px) {
     .container { padding: 16px; }
     .hero { padding: 28px 0 8px; }
@@ -297,8 +167,8 @@
     .q-item { padding: 14px; }
     .q-item .q-actions { flex-direction: column; }
     .q-item .q-actions button { width: 100%; text-align: center; }
-    .layer-actions { flex-direction: column; align-items: stretch; }
-    .layer-actions .footer-hint { text-align: center; margin-right: 0; }
+    .layer-actions { flex-direction: column; }
+    .layer-actions button { width: 100%; text-align: center; }
   }
 </style>
 </head>
@@ -307,33 +177,25 @@
 <div class="container" id="app">
 
   <div id="screenHome">
-
     <div class="hero">
       <h1>无穷追问</h1>
       <div class="sub">persistent-asking</div>
-      <p class="tagline">
-        不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。
-      </p>
-      <button class="hero-cta" onclick="scrollToPaths()">
-        开始追问
-      </button>
+      <p class="tagline">不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。</p>
+      <button class="hero-cta" onclick="scrollToPaths()">开始追问</button>
     </div>
-
     <div class="why">
       <p>我们每天都在判断——代码、设计、方案、决策。"好不好"没有标准答案，但"哪里不够好"可以被追问暴露。这套框架提供结构化的追问路径，帮你系统逼近良质。不是评分表，不是清单，是一组让你自己问出答案的问题。</p>
     </div>
-
     <div class="how-section" id="pathsSection">
       <div class="how-title">选择路径</div>
       <div class="how-grid">
-        <div class="how-card ref-card" onclick="startFunnel('ref')">
+        <div class="how-card ref-card" onclick="startPreflight()">
           <div class="icon-wrap">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </div>
           <h3>有参考样本</h3>
-          <p>有同类优秀作品可以做对比时，走标准路径——找靶、逻辑、目标、比较、边界、直觉。</p>
+          <p>有同类优秀作品可以做对比时，走标准路径——逻辑、目标、比较、边界、直觉。</p>
           <div class="steps-preview">
-            <span>前置</span><span class="dot"></span>
             <span>P0</span><span class="dot"></span>
             <span>P1</span><span class="dot"></span>
             <span>P2</span><span class="dot"></span>
@@ -355,14 +217,32 @@
         </div>
       </div>
     </div>
-
     <div class="footer">
       <div class="footer-links">
         <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">GitHub</a>
         <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈</a>
-        <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">完整方法论</a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">方法论</a>
       </div>
       <p>无穷追问</p>
+    </div>
+  </div>
+
+  <!-- ===== PRE-FLIGHT (找靶确认，仅 ref 路径可见) ===== -->
+  <div id="screenPreflight" class="hidden">
+    <div class="preflight">
+      <div class="preflight-card">
+        <h2>动手前先找靶</h2>
+        <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">选这条路意味着你有同类样本可参考。在正式开始追问前，先做好这件事：</p>
+        <ol class="steps">
+          <li>搜靶：找到 <em>3-5 个</em>同类优秀样本（结构类似就行，跨领域也可以）</li>
+          <li>拆靶：分析好在哪里——<em>结构、标准、细节特征</em></li>
+          <li>定靶：确定本次参考的主要靶子。过程中随时回看</li>
+        </ol>
+        <div class="preflight-actions">
+          <button class="ready-btn" onclick="startFunnel('ref')">准备好了，开始追问</button>
+          <button class="skip-btn" onclick="startFunnel('ref-skip')">跳过，我没找</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -376,106 +256,122 @@
 <script>
 // ===== DATA =====
 
+// Ref path: P0-P4 only (前置找靶 is a pre-check before entering)
 const LAYERS_REF = [
-  {
-    id: 'pre', label: '前置 | 找靶', short: '前置',
-    question: '动手前有没有找优秀样本做参考？',
-    items: [
-      { text: '搜到 3-5 个同类优秀样本了吗？不一定要完全相同，跨领域也行', note: '关键在于建立一个参考坐标，不只是"感觉应该怎么做"' },
-      { text: '拆出它好在哪里了吗？结构、标准、细节特征', note: '不只是看结果，要提取"它为什么好"的结构性原因' },
-      { text: '确定本次参考的靶子了吗？', note: '不是要超越它，是要有坐标系——过程中随时回看瞄一眼' }
+  { id:'p0', label:'P0 | 逻辑一致性', short:'P0',
+    question:'这个产出有没有自相矛盾的地方？',
+    priority:'p0',
+    items:[
+      { text:'论点之间有先后关系："这里的主张和前面说的矛盾吗？"' },
+      { text:'多个标准并存："判断 A 和判断 B 用的是同一套标准吗？"' },
+      { text:'因果链条较长："推出这个结论需要几步前提？每一步站得住吗？"' }
     ],
-    stop: '有一个明确的参考基准放在手边，知道"做到什么程度算及格"'
+    stop:'每个主张都能用同一套标准贯穿。不出现"因为X所以Y但在Z上又推翻Y"的循环'
   },
-  {
-    id: 'p0', label: 'P0 | 逻辑一致性', short: 'P0',
-    question: '这个产出有没有自相矛盾的地方？',
-    items: [
-      { text: '论点之间有先后关系："这里的主张和前面说的矛盾吗？"' },
-      { text: '多个标准并存："判断 A 和判断 B 用的是同一套标准吗？"' },
-      { text: '因果链条较长："推出这个结论需要几步前提？每一步站得住吗？"' }
+  { id:'p1', label:'P1 | 目标对齐', short:'P1',
+    question:'这个产出真的在解决最初要解决的问题吗？',
+    priority:'p0',
+    items:[
+      { text:'方案已成型："最初要解决什么问题？现在的方案真的在解决它吗？"' },
+      { text:'有多个目标："这些目标之间有冲突吗？你在优先哪一个？为什么？"' },
+      { text:'受众不明确："这个产出给谁看的？他们关心什么？"' }
     ],
-    stop: '每个主张都能用同一套标准贯穿。不出现"因为X所以Y但在Z上又推翻Y"的循环'
+    stop:'产出的每个主要部分都能明确回答"它服务于哪个目标"'
   },
-  {
-    id: 'p1', label: 'P1 | 目标对齐', short: 'P1',
-    question: '这个产出真的在解决最初要解决的问题吗？',
-    items: [
-      { text: '方案已成型："最初要解决什么问题？现在的方案真的在解决它吗？"' },
-      { text: '有多个目标："这些目标之间有冲突吗？你在优先哪一个？为什么？"' },
-      { text: '受众不明确："这个产出给谁看的？他们关心什么？"' }
+  { id:'p2', label:'P2 | 比较覆盖', short:'P2',
+    question:'有没有被排除的选项？排除的理由站得住吗？',
+    priority:'p1',
+    items:[
+      { text:'方案已选定："为什么选 A 不选 B？排除 B 的理由是什么？"' },
+      { text:'貌似唯一解："真的只有这一种做法？有没有被你默认排除的选项？"' },
+      { text:'有明显权衡："选了 A 之后损失了什么？这个损失你能接受吗？"' }
     ],
-    stop: '产出的每个主要部分都能明确回答"它服务于哪个目标"'
+    stop:'每个被排除的选项都有明确、可复述的排除理由'
   },
-  {
-    id: 'p2', label: 'P2 | 比较覆盖', short: 'P2',
-    question: '有没有被排除的选项？排除的理由站得住吗？',
-    items: [
-      { text: '方案已选定："为什么选 A 不选 B？排除 B 的理由是什么？"' },
-      { text: '貌似唯一解："真的只有这一种做法？有没有被你默认排除的选项？"' },
-      { text: '有明显权衡："选了 A 之后损失了什么？这个损失你能接受吗？"' }
+  { id:'p3', label:'P3 | 边界排查', short:'P3',
+    question:'极端情况下这个产出还能站住吗？',
+    priority:'p1',
+    items:[
+      { text:'输入有边界："如果输入比预期大/小/乱/极端，结果会怎样？"' },
+      { text:'前提假设："这个方案成立的前提是什么？如果前提不成立呢？"' },
+      { text:'鲁棒性："哪个环节最容易出问题？出问题后怎么补救？"' }
     ],
-    stop: '每个被排除的选项都有明确、可复述的排除理由'
+    stop:'能列出 3 个以上可能故障点，每个都有应对预案（或声明"接受这个风险"）'
   },
-  {
-    id: 'p3', label: 'P3 | 边界排查', short: 'P3',
-    question: '极端情况下这个产出还能站住吗？',
-    items: [
-      { text: '输入有边界："如果输入比预期大/小/乱/极端，结果会怎样？"' },
-      { text: '前提假设："这个方案成立的前提是什么？如果前提不成立呢？"' },
-      { text: '鲁棒性："哪个环节最容易出问题？出问题后怎么补救？"' }
+  { id:'p4', label:'P4 | 感官直觉', short:'P4',
+    question:'去掉所有理由，只看结果本身，感觉对吗？',
+    priority:'p2',
+    items:[
+      { text:'审美判断："如果去掉所有解释，只看结果本身，你舒服吗？"' },
+      { text:'隐隐不对："有没有某个地方你觉得怪怪的但说不清为什么？"' },
+      { text:'整体感："把它和优秀的同类放在一起，它会显得突兀吗？"' }
     ],
-    stop: '能列出 3 个以上可能故障点，每个都有应对预案（或声明"接受这个风险"）'
-  },
-  {
-    id: 'p4', label: 'P4 | 感官直觉', short: 'P4',
-    question: '去掉所有理由，只看结果本身，感觉对吗？',
-    items: [
-      { text: '审美判断："如果去掉所有解释，只看结果本身，你舒服吗？"' },
-      { text: '隐隐不对："有没有某个地方你觉得怪怪的但说不清为什么？"' },
-      { text: '整体感："把它和优秀的同类放在一起，它会显得突兀吗？"' }
-    ],
-    stop: '没有"隐隐的不对劲"残留。如果感觉不对，退回 P0-P3 排查具体原因'
+    stop:'没有"隐隐的不对劲"残留。如果感觉不对，按顺序退回 P0 → P1 → P2 → P3 排查'
   }
 ];
 
 const LAYERS_NOREF = [
-  {
-    id: 'a', label: 'A | 必要条件', short: 'A',
-    question: '这个产出最不能违背什么？',
-    items: [
-      { text: '全新领域："如果不允许失败，哪些条件是必须满足的？"' },
-      { text: '约束不清晰："哪些是硬约束（不满足就不可接受），哪些可以妥协？"' },
-      { text: '目标模糊："哪怕其他方面都很差，唯一不能搞砸的是哪一点？"' }
+  { id:'a', label:'A | 必要条件', short:'A', question:'这个产出最不能违背什么？', priority:'p0',
+    items:[
+      { text:'全新领域："如果不允许失败，哪些条件是必须满足的？"' },
+      { text:'约束不清晰："哪些是硬约束（不满足就不可接受），哪些可以妥协？"' },
+      { text:'目标模糊："哪怕其他方面都很差，唯一不能搞砸的是哪一点？"' }
     ],
-    stop: '列出不可违背清单，每条都能回答"违反了会怎样"'
-  },
-  {
-    id: 'b', label: 'B | 极值定位', short: 'B',
-    question: '最好和最差之间，我站在哪里？',
-    items: [
-      { text: '没有坐标："最差结果长什么样？最好结果（不考虑成本）长什么样？"' },
-      { text: '资源有限："在当前资源下，两个极端之间哪个点最合理？"' },
-      { text: '决策纠结："往左偏和往右偏，分别会多付出或损失什么？"' }
+    stop:'列出不可违背清单，每条都能回答"违反了会怎样"' },
+  { id:'b', label:'B | 极值定位', short:'B', question:'最好和最差之间，我站在哪里？', priority:'p1',
+    items:[
+      { text:'没有坐标："最差结果长什么样？最好结果（不考虑成本）长什么样？"' },
+      { text:'资源有限："在当前资源下，两个极端之间哪个点最合理？"' },
+      { text:'决策纠结："往左偏和往右偏，分别会多付出或损失什么？"' }
     ],
-    stop: '能画出"极差 - 合理 - 极好"的坐标轴，标注自己的位置和理由'
-  },
-  {
-    id: 'c', label: 'C | 快速反馈', short: 'C',
-    question: '真实世界怎么说？',
-    items: [
-      { text: '无样本："最小可验证版本是什么？最快多久能拿到第一个反馈？"' },
-      { text: '假设过多："这条假设如果不成立，最快要多久能验证出来？"' },
-      { text: '方向不确定："需要多少反馈才能判断方向对了？"' }
+    stop:'能画出"极差 - 合理 - 极好"的坐标轴，标注自己的位置和理由' },
+  { id:'c', label:'C | 快速反馈', short:'C', question:'真实世界怎么说？', priority:'p2',
+    items:[
+      { text:'无样本："最小可验证版本是什么？最快多久能拿到第一个反馈？"' },
+      { text:'假设过多："这条假设如果不成立，最快要多久能验证出来？"' },
+      { text:'方向不确定："需要多少反馈才能判断方向对了？"' }
     ],
-    stop: '收到 2-3 个独立反馈后，能说出"哪个方向对了"'
-  }
+    stop:'收到 2-3 个独立反馈后，能说出"哪个方向对了"' }
 ];
 
 let state = { mode: null, currentLayer: 0, layers: [], improvements: [] };
 
+// Restore from sessionStorage if available
+try {
+  const saved = sessionStorage.getItem('persistent-asking-state');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    if (parsed.layers && parsed.layers.length > 0) {
+      state = parsed;
+      showScreen('screenFunnel');
+      render();
+    }
+  }
+} catch(e) { /* ignore */ }
+
+function saveState() {
+  try { sessionStorage.setItem('persistent-asking-state', JSON.stringify(state)); } catch(e) {}
+}
+
+function clearState() {
+  try { sessionStorage.removeItem('persistent-asking-state'); } catch(e) {}
+}
+
 function scrollToPaths() {
-  document.getElementById('pathsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('pathsSection').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function startPreflight() {
+  showScreen('screenPreflight');
+  window.scrollTo({ top: 0, behavior:'smooth' });
+  document.getElementById('progressWrap').classList.add('hidden');
+}
+
+function startFunnel(mode) {
+  const refMode = mode === 'ref-skip' ? 'ref' : mode;
+  state = { mode: refMode, currentLayer: 0, improvements: [], layers: refMode === 'ref' ? LAYERS_REF : LAYERS_NOREF };
+  window.scrollTo({ top:0, behavior:'smooth' });
+  render();
 }
 
 function render() {
@@ -483,20 +379,21 @@ function render() {
   if (idx >= layers.length) { renderResult(); return; }
   renderProgress(layers, idx);
   renderFunnel(layers[idx], idx, layers);
+  saveState();
 }
 
 function renderProgress(layers, currentIdx) {
   const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
   wrap.classList.remove('hidden');
   bar.innerHTML = '';
-  layers.forEach((l, i) => {
+  layers.forEach((l,i) => {
     const step = document.createElement('span');
     step.className = 'progress-step';
     if (i < currentIdx) step.classList.add('done');
-    if (i === currentIdx) step.classList.add('active', 'current');
+    if (i === currentIdx) step.classList.add('active','current');
     step.textContent = l.short || l.label;
     bar.appendChild(step);
-    if (i < layers.length - 1) {
+    if (i < layers.length-1) {
       const line = document.createElement('span');
       line.className = 'progress-line';
       if (i < currentIdx) line.classList.add('done');
@@ -509,45 +406,41 @@ function renderFunnel(layer, idx, layers) {
   showScreen('screenFunnel');
   const el = document.getElementById('screenFunnel');
   let itemsHtml = '';
-  layer.items.forEach((item, i) => {
-    const saved = state.improvements.find(imp => imp.layer === (idx + '-' + i));
-    const statusClass = saved ? (saved.text ? 'failed' : 'passed') : '';
-    const statusLabel = saved ? (saved.text
-      ? '<span class="status-label fail">\u2717 需改进</span>'
-      : '<span class="status-label pass">\u2713 没问题</span>') : '';
-    itemsHtml += `
-      <div class="q-item ${statusClass}">
-        <div class="q-text">${item.text}</div>
-        ${item.note ? `<div class="q-note">${item.note}</div>` : ''}
-        <div class="q-actions" id="qa-${idx}-${i}">
-          ${saved ? statusLabel
-            : `<button class="pass-btn" onclick="markPass(${idx},${i})">\u2713 没问题</button>
-               <button class="fail-btn" onclick="showImprove(${idx},${i})">\u2717 需改进</button>`}
-        </div>
-        <div class="improve-input-wrap" id="imp-${idx}-${i}">
-          <textarea placeholder="具体改进点..." id="impT-${idx}-${i}"></textarea>
-          <button class="save-btn" onclick="saveImprove(${idx},${i})">保存</button>
-        </div>
-      </div>`;
-  });
-  const badgesHtml = (layer.badges||[]).map(b => `<span class="card-badge ${b==='pre'?'pre':b==='ext'?'ext':''}">${b}</span>`).join('');
-  const isLast = idx === layers.length - 1;
-  const canProceed = layer.items.every((_,i) => state.improvements.some(imp => imp.layer === (idx+'-'+i)));
-  el.innerHTML = `
-    <div class="card">
-      <div class="card-header">
-        ${badgesHtml}
-        <div class="card-title">${layer.label}</div>
-        <span class="card-counter">${idx+1}/${layers.length}</span>
+  layer.items.forEach((item,i) => {
+    const saved = state.improvements.find(imp => imp.layer === (idx+'-'+i));
+    const sc = saved ? (saved.text ? 'failed' : 'passed') : '';
+    const sl = saved ? (saved.text ? '<span class="s-label fail">\u2717 需改进</span>' : '<span class="s-label pass">\u2713 没问题</span>') : '';
+    itemsHtml += `<div class="q-item ${sc}">
+      <div class="q-text">${item.text}</div>
+      ${item.note ? `<div class="q-note">${item.note}</div>` : ''}
+      <div class="q-actions" id="qa-${idx}-${i}">${saved ? sl :
+        `<button class="pass-btn" onclick="markPass(${idx},${i})">\u2713 没问题</button>
+         <button class="fail-btn" onclick="showImprove(${idx},${i})">\u2717 需改进</button>`}
       </div>
-      <div class="card-question">${layer.question}</div>
-      ${itemsHtml}
-      ${layer.stop ? `<div class="stop-signal">终止信号：${layer.stop}</div>` : ''}
-      <div class="layer-actions">
-        <span class="footer-hint">全部确认后可进入下一步</span>
-        <button class="next-btn" onclick="nextLayer()" ${!canProceed?'disabled':''}>${isLast?'\uD83D\uDCCB 查看结果':'下一步'}</button>
+      <div class="improve-input-wrap" id="imp-${idx}-${i}">
+        <textarea placeholder="具体改进点..." id="impT-${idx}-${i}"></textarea>
+        <button class="save-btn" onclick="saveImprove(${idx},${i})">保存</button>
       </div>
     </div>`;
+  });
+  const isLast = idx === layers.length-1;
+  const isFirst = idx === 0;
+  const canProceed = layer.items.every((_,i) => state.improvements.some(imp => imp.layer === (idx+'-'+i)));
+  el.innerHTML = `<div class="card">
+    <div class="card-header">
+      <div class="card-title">${layer.label}</div>
+      <span class="card-counter">${idx+1}/${layers.length}</span>
+    </div>
+    <div class="card-question">${layer.question}</div>
+    ${itemsHtml}
+    ${layer.stop ? `<div class="stop-signal">终止信号：${layer.stop}</div>` : ''}
+    <div class="layer-actions">
+      ${!isFirst ? '<button class="back-btn" onclick="prevLayer()">\u2190 上一步</button>' : '<span></span>'}
+      <button class="next-btn" onclick="nextLayer()" ${!canProceed?'disabled':''}>
+        ${isLast ? '\uD83D\uDCCB 查看结果' : '下一步'}
+      </button>
+    </div>
+  </div>`;
 }
 
 function renderResult() {
@@ -562,50 +455,46 @@ function renderResult() {
       const layerId = imp.layer.split('-')[0];
       const layer = state.layers.find(l => l.id === layerId);
       const tag = layer ? (layer.short||layer.id) : layerId;
-      const tagClass = layerId === 'pre' ? 'p0' : layerId;
-      listHtml += `<li><span class="result-tag ${tagClass}">${tag}</span>${imp.text}</li>`;
+      const pri = layer ? (layer.priority||'p2') : 'p2';
+      const priLabel = pri === 'p0' ? '必改' : pri === 'p1' ? '建议改' : '可选改';
+      listHtml += `<li><span class="r-tag ${pri}">${priLabel}</span><span class="result-tag">${tag}</span>${imp.text}</li>`;
     });
     listHtml += '</ul>';
+    // Priority legend
+    listHtml += `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;font-size:12px;color:var(--gray-500);">
+      <span><span class="r-tag p0" style="font-size:10px;">必改</span> 逻辑矛盾/目标偏移，不改不可接受</span>
+      <span><span class="r-tag p1" style="font-size:10px;">建议改</span> 比较/边界问题，建议优先处理</span>
+      <span><span class="r-tag p2" style="font-size:10px;">可选改</span> 直觉问题，有余力再改</span>
+    </div>`;
   } else {
     listHtml = '<div style="text-align:center;padding:32px 0;"><div style="font-size:40px;margin-bottom:12px;">\u2728</div><h3 style="margin-bottom:6px;">全部通过</h3><p style="color:var(--gray-500);font-size:14px;">每层都没有发现问题。可以放心交付了。</p></div>';
   }
   const total = state.improvements.length;
   const issues = state.improvements.filter(i=>i.text).length;
   const clean = total - issues;
-  el.innerHTML = `
-    <div class="card">
-      <div class="card-header">
-        <span class="card-badge" style="background:var(--green);">结果</span>
-        <div class="card-title">追问完成</div>
+  el.innerHTML = `<div class="card">
+    <div class="card-header"><span class="card-badge" style="background:var(--green);">结果</span><div class="card-title">追问完成</div></div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">共检查 ${state.layers.length} 层</p>
+    <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+      <div style="flex:1;text-align:center;padding:12px;background:#f0fdf4;border-radius:8px;">
+        <div style="font-size:24px;font-weight:700;color:var(--green);">${clean}</div><div style="font-size:12px;color:var(--gray-500);">已确认</div>
       </div>
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">共检查 ${state.layers.length} 层</p>
-      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
-        <div style="flex:1;text-align:center;padding:12px;background:#f0fdf4;border-radius:8px;">
-          <div style="font-size:24px;font-weight:700;color:var(--green);">${clean}</div>
-          <div style="font-size:12px;color:var(--gray-500);">已确认</div>
-        </div>
-        <div style="flex:1;text-align:center;padding:12px;background:${hasIssues?'#fef2f2':'#f0fdf4'};border-radius:8px;">
-          <div style="font-size:24px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">${issues}</div>
-          <div style="font-size:12px;color:var(--gray-500);">需改进</div>
-        </div>
+      <div style="flex:1;text-align:center;padding:12px;background:${hasIssues?'#fef2f2':'#f0fdf4'};border-radius:8px;">
+        <div style="font-size:24px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">${issues}</div><div style="font-size:12px;color:var(--gray-500);">需改进</div>
       </div>
-      ${listHtml}
-      <div style="margin-top:24px;">
-        <button class="export-btn" onclick="exportResult()">导出清单</button>
-        <button class="restart-btn" onclick="resetAll()">重新开始</button>
-      </div>
-    </div>`;
-}
-
-function startFunnel(mode) {
-  state = { mode, currentLayer: 0, improvements: [], layers: mode==='ref' ? LAYERS_REF : LAYERS_NOREF };
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  render();
+    </div>
+    ${listHtml}
+    <div style="margin-top:24px;">
+      <button class="export-btn" onclick="exportResult()">导出清单</button>
+      <button class="restart-btn" onclick="resetAll()">重新开始</button>
+    </div>
+  </div>`;
+  clearState();
 }
 
 function markPass(layerIdx, itemIdx) {
   state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx+'-'+itemIdx));
-  state.improvements.push({ layer: layerIdx+'-'+itemIdx, itemIndex: itemIdx, text: '' });
+  state.improvements.push({ layer:layerIdx+'-'+itemIdx, itemIndex:itemIdx, text:'' });
   render();
 }
 
@@ -618,37 +507,41 @@ function saveImprove(layerIdx, itemIdx) {
   const t = document.getElementById('impT-'+layerIdx+'-'+itemIdx);
   const text = (t.value||'').trim() || '（待改进）';
   state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx+'-'+itemIdx));
-  state.improvements.push({ layer: layerIdx+'-'+itemIdx, itemIndex: itemIdx, text });
+  state.improvements.push({ layer:layerIdx+'-'+itemIdx, itemIndex:itemIdx, text });
   t.disabled = true;
   render();
 }
 
 function nextLayer() { state.currentLayer++; render(); }
+function prevLayer() { if (state.currentLayer > 0) { state.currentLayer--; render(); } }
 
 function showScreen(id) {
-  ['screenHome','screenFunnel','screenResult'].forEach(s => {
+  ['screenHome','screenPreflight','screenFunnel','screenResult'].forEach(s => {
     document.getElementById(s).classList.toggle('hidden', s !== id);
   });
 }
 
 function resetAll() {
-  state = { mode: null, currentLayer: 0, layers: [], improvements: [] };
+  state = { mode:null, currentLayer:0, layers:[], improvements:[] };
   document.getElementById('progressWrap').classList.add('hidden');
+  clearState();
   showScreen('screenHome');
 }
 
 function exportResult() {
   const issues = state.improvements.filter(i => i.text);
   if (!issues.length) { alert('全部通过，无需导出。'); return; }
-  let text = '# \u65E0\u7A77\u8FFD\u95EE\u6539\u8FDB\u6E05\u5355\n\n';
-  issues.forEach((imp, i) => {
+  let text = '# \u65E0\u7A77\u8FFD\u95EE \u6539\u8FDB\u6E05\u5355\n\n';
+  issues.forEach((imp,i) => {
     const layerId = imp.layer.split('-')[0];
     const layer = state.layers.find(l => l.id === layerId);
     const tag = layer ? (layer.short||layer.label) : layerId;
-    text += (i+1) + '. [' + tag + '] ' + imp.text + '\n';
+    const pri = layer ? (layer.priority||'p2') : 'p2';
+    const priLabel = pri === 'p0' ? '必改' : pri === 'p1' ? '建议改' : '可选改';
+    text += (i+1) + '. [' + priLabel + '][' + tag + '] ' + imp.text + '\n';
   });
   text += '\n--\n\u65E0\u7A77\u8FFD\u95EE \u00B7 persistent-asking';
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const blob = new Blob([text], { type:'text/plain;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'persistent-asking-checklist.txt';
