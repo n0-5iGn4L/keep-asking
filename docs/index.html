@@ -325,58 +325,57 @@
 
 <div class="container" id="app">
 
-  <!-- ===== HERO ===== -->
-  <div class="hero">
-    <div class="hero-badge">品质追问方法论</div>
-    <h1>无穷追问</h1>
-    <div class="sub">persistent-asking</div>
-    <p class="tagline">
-      不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。
-    </p>
-    <button class="hero-cta" onclick="scrollToPaths()">
-      开始追问 <span class="arrow">→</span>
-    </button>
-  </div>
+  <!-- ===== HOME SCREEN (wrapped for showScreen toggle) ===== -->
+  <div id="screenHome">
+    <div class="hero">
+      <div class="hero-badge">品质追问方法论</div>
+      <h1>无穷追问</h1>
+      <div class="sub">persistent-asking</div>
+      <p class="tagline">
+        不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。
+      </p>
+      <button class="hero-cta" onclick="scrollToPaths()">
+        开始追问 <span class="arrow">→</span>
+      </button>
+    </div>
 
-  <!-- ===== HOW IT WORKS ===== -->
-  <div class="how-section" id="pathsSection">
-    <div class="how-title">选择你的追问路径</div>
-    <div class="how-grid">
-      <div class="how-card ref-card" onclick="startFunnel('ref')">
-        <div class="icon-badge">🔍</div>
-        <h3>我有参考样本</h3>
-        <p>有同类优秀作品可以做对比时，走这套标准路径——前置找靶 → P0逻辑 → P1目标 → P2对比 → P3边界 → P4直觉。</p>
-        <span class="path-tag">5层追问路径</span>
+    <div class="how-section" id="pathsSection">
+      <div class="how-title">选择你的追问路径</div>
+      <div class="how-grid">
+        <div class="how-card ref-card" onclick="startFunnel('ref')">
+          <div class="icon-badge">🔍</div>
+          <h3>我有参考样本</h3>
+          <p>有同类优秀作品可以做对比时，走这套标准路径——前置找靶 → P0逻辑 → P1目标 → P2对比 → P3边界 → P4直觉。</p>
+          <span class="path-tag">5层追问路径</span>
+        </div>
+        <div class="how-card noref-card" onclick="startFunnel('noref')">
+          <div class="icon-badge">🧭</div>
+          <h3>我没有参考样本</h3>
+          <p>面对全新领域、没有类比对象时，走这套路线——必要条件拆解 → 极值定位 → 快速反馈闭环。</p>
+          <span class="path-tag">无参考系路径</span>
+        </div>
       </div>
-      <div class="how-card noref-card" onclick="startFunnel('noref')">
-        <div class="icon-badge">🧭</div>
-        <h3>我没有参考样本</h3>
-        <p>面对全新领域、没有类比对象时，走这套路线——必要条件拆解 → 极值定位 → 快速反馈闭环。</p>
-        <span class="path-tag">无参考系路径</span>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+      <div class="footer-links">
+        <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">
+          <span class="gh-icon"></span> GitHub
+        </a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈建议</a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">完整方法论</a>
       </div>
+      <p>无穷追问 · 不定义"好"，只追问"不够好"</p>
     </div>
   </div>
 
-  <!-- ===== PROGRESS ===== -->
+  <!-- ===== FUNNEL / RESULT SCREENS ===== -->
   <div class="progress-wrap hidden" id="progressWrap">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-
-  <!-- ===== SCREENS ===== -->
   <div id="screenFunnel" class="hidden"></div>
   <div id="screenResult" class="hidden"></div>
-
-  <!-- ===== FOOTER ===== -->
-  <div class="footer">
-    <div class="footer-links">
-      <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">
-        <span class="gh-icon"></span> GitHub
-      </a>
-      <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈建议</a>
-      <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">完整方法论</a>
-    </div>
-    <p>无穷追问 · 不定义"好"，只追问"不够好"</p>
-  </div>
 </div>
 
 <script>
