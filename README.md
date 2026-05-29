@@ -1,7 +1,7 @@
-# keep-asking / 追问
+# persistent-asking / 无穷追问
 
-> **Don't define "good". Keep asking until "not good enough" reveals itself.**
-> **不定义什么是"好"，追问出哪里"不够好"。**
+> **Don't define "good". Persistently ask until "not good enough" reveals itself.**
+> **不定义什么是"好"，无穷追问出哪里"不够好"。**
 
 ---
 
@@ -15,7 +15,7 @@ The problem is, "good" has no universal answer. No checklist, no rubric, no set 
 
 This project takes a different approach: **instead of defining what "good" looks like, we keep asking what's "not good enough" until nothing is left.** The closer you are to good, the harder it is to articulate why — but the easier it is to find what's still off.
 
-**Keep asking. The answer is in the questions.**
+**Persistently ask. The answer is in the questions.**
 
 ---
 
@@ -185,7 +185,7 @@ If you jump to C without A, you're testing blind — you don't know what you're 
 
 ## Interactive Tool
 
-**→ [Try the Keep-Asking Funnel](https://n0-5iGn4L.github.io/keep-asking)**
+**→ [Try the Persistent-Asking Funnel](https://n0-5ign4l.github.io/persistent-asking)**
 
 A step-by-step web tool that guides you through the funnel:
 - Choose your scenario (with/without reference)
@@ -236,7 +236,7 @@ MIT — see [LICENSE](./LICENSE).
 
 ## Contributing
 
-Keep-asking is a living methodology. If you have:
+Persistent-asking is a living methodology. If you have:
 
 - New questioning angles for specific domains (code, design, writing, etc.)
 - Real-world examples of the funnel in action
