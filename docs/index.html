@@ -13,20 +13,19 @@
     --green-dark: #059669;
     --red: #ef4444;
     --amber: #f59e0b;
-    --amber-light: #fbbf24;
     --gray-50: #f8fafc;
     --gray-100: #f1f5f9;
     --gray-200: #e2e8f0;
     --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
     --gray-500: #64748b;
     --gray-600: #475569;
     --gray-700: #334155;
-    --gray-800: #1e293b;
     --gray-900: #0f172a;
     --radius: 12px;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -41,101 +40,82 @@
 
   /* ===== HERO ===== */
   .hero {
-    text-align: center; padding: 56px 0 16px;
+    text-align: center; padding: 48px 0 12px;
     position: relative; overflow: hidden;
   }
-  .hero::before {
-    content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-block; font-size: 12px; font-weight: 600;
-    padding: 4px 14px; border-radius: 20px;
-    background: rgba(99,102,241,0.08); color: var(--accent);
-    letter-spacing: 0.3px; margin-bottom: 20px;
-    border: 1px solid rgba(99,102,241,0.15);
-  }
   .hero h1 {
-    font-size: 38px; font-weight: 800; letter-spacing: -1px; line-height: 1.2;
+    font-size: 38px; font-weight: 800; letter-spacing: -1px; line-height: 1.15;
     background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 12px; position: relative;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 12px;
   }
   .hero .sub {
-    font-size: 14px; color: var(--gray-500); margin-bottom: 20px;
-    letter-spacing: 1px;
+    font-size: 13px; color: var(--gray-400); margin-bottom: 16px;
+    letter-spacing: 0.5px;
   }
   .hero .tagline {
     font-size: 17px; color: var(--gray-600); font-weight: 400;
-    margin-bottom: 32px;
-    max-width: 480px; margin-left: auto; margin-right: auto;
+    max-width: 460px; margin: 0 auto 28px;
   }
-  .hero .tagline em {
-    font-style: normal; color: var(--accent); font-weight: 600;
-  }
+  .hero .tagline em { font-style: normal; color: var(--accent); font-weight: 600; }
   .hero-cta {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 14px 32px; background: var(--accent); color: white;
     border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
-    cursor: pointer; transition: all 0.25s ease;
+    cursor: pointer; transition: all 0.2s ease;
     box-shadow: 0 4px 14px rgba(99,102,241,0.3);
   }
-  .hero-cta:hover {
-    background: var(--accent-dark); transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99,102,241,0.4);
-  }
+  .hero-cta:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.35); }
   .hero-cta:active { transform: translateY(0); }
-  .hero-cta .arrow { transition: transform 0.2s; }
-  .hero-cta:hover .arrow { transform: translateX(4px); }
+
+  /* ===== WHY ===== */
+  .why {
+    max-width: 520px; margin: 28px auto 16px;
+    text-align: center;
+  }
+  .why p {
+    font-size: 14px; color: var(--gray-500); line-height: 1.8;
+  }
 
   /* ===== HOW IT WORKS ===== */
-  .how-section { margin: 40px 0 32px; }
+  .how-section { margin: 32px 0; }
   .how-title {
-    font-size: 14px; font-weight: 600; color: var(--gray-500);
+    font-size: 13px; font-weight: 600; color: var(--gray-400);
     text-transform: uppercase; letter-spacing: 1.5px;
-    margin-bottom: 20px; text-align: center;
+    margin-bottom: 16px; text-align: center;
   }
   .how-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
   }
   .how-card {
     background: white; border-radius: var(--radius);
-    padding: 28px 24px; border: 1px solid var(--gray-200);
-    transition: all 0.25s ease;
-    text-align: left; cursor: pointer;
+    padding: 26px 22px; border: 1px solid var(--gray-200);
+    transition: all 0.2s ease; cursor: pointer;
     position: relative; overflow: hidden;
   }
   .how-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    transition: all 0.3s;
+    transition: opacity 0.2s;
   }
   .how-card.ref-card::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
-  .how-card.noref-card::before { background: linear-gradient(90deg, var(--amber), var(--amber-light)); }
+  .how-card.noref-card::before { background: linear-gradient(90deg, var(--amber), #fbbf24); }
   .how-card:hover {
-    border-color: var(--accent-light);
-    box-shadow: var(--shadow-md); transform: translateY(-3px);
+    border-color: var(--accent-light); box-shadow: var(--shadow-md); transform: translateY(-2px);
   }
-  .how-card:active { transform: translateY(-1px); }
-  .how-card .icon-badge {
+  .how-card .icon-wrap {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px; border-radius: 10px;
-    font-size: 20px; margin-bottom: 14px;
+    width: 38px; height: 38px; border-radius: 10px;
+    font-size: 18px; margin-bottom: 14px;
   }
-  .how-card.ref-card .icon-badge { background: rgba(99,102,241,0.1); }
-  .how-card.noref-card .icon-badge { background: rgba(245,158,11,0.1); }
-  .how-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .how-card.ref-card .icon-wrap { background: rgba(99,102,241,0.1); }
+  .how-card.noref-card .icon-wrap { background: rgba(245,158,11,0.1); }
+  .how-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
   .how-card p { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
-  .how-card .path-tag {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    padding: 2px 10px; border-radius: 6px; margin-top: 12px;
-    letter-spacing: 0.3px;
+  .how-card .steps-preview {
+    margin-top: 12px; font-size: 12px; color: var(--gray-400);
+    display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
   }
-  .how-card.ref-card .path-tag { background: rgba(99,102,241,0.08); color: var(--accent); }
-  .how-card.noref-card .path-tag { background: rgba(245,158,11,0.1); color: #b45309; }
+  .how-card .steps-preview .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gray-300); display: inline-block; margin: 0 2px; }
 
   @media (max-width: 600px) {
     .how-grid { grid-template-columns: 1fr; }
@@ -143,29 +123,22 @@
 
   /* ===== FOOTER ===== */
   .footer {
-    margin-top: 48px; text-align: center; padding-top: 24px;
+    margin-top: 40px; text-align: center; padding-top: 20px;
     border-top: 1px solid var(--gray-200);
   }
-  .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
   .footer-links a {
     font-size: 13px; color: var(--gray-500); text-decoration: none;
-    transition: color 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
   }
   .footer-links a:hover { color: var(--accent); }
-  .footer-links a .gh-icon {
-    width: 16px; height: 16px; display: inline-block;
-    background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") no-repeat center;
-    mask-size: contain;
-  }
-  .footer p { font-size: 12px; color: var(--gray-500); margin-top: 12px; }
+  .footer p { font-size: 12px; color: var(--gray-400); margin-top: 10px; }
 
   /* ===== PROGRESS ===== */
   .progress-wrap { margin: 24px 0; }
   .progress-bar {
     display: flex; align-items: center; gap: 4px;
-    overflow-x: auto; padding: 4px 0;
-    scrollbar-width: none;
+    overflow-x: auto; padding: 4px 0; scrollbar-width: none;
   }
   .progress-bar::-webkit-scrollbar { display: none; }
   .progress-step {
@@ -189,51 +162,56 @@
     margin-bottom: 16px; border: 1px solid var(--gray-200);
   }
   .card-header {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
   }
   .card-badge {
     font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
     background: var(--accent); color: white; text-transform: uppercase; letter-spacing: 0.5px;
+    line-height: 1.4;
   }
   .card-badge.pre { background: var(--amber); }
   .card-badge.ext { background: var(--gray-600); }
-  .card-badge[style*="green"] { background: var(--green) !important; }
   .card-title { font-size: 18px; font-weight: 700; }
+  .card-counter {
+    margin-left: auto; font-size: 12px; color: var(--gray-400); font-weight: 500;
+  }
   .card-question {
     font-size: 15px; color: var(--gray-700); padding: 12px 16px;
-    background: var(--gray-100); border-radius: 8px; margin-bottom: 20px;
+    background: var(--gray-100); border-radius: var(--radius-sm); margin-bottom: 20px;
     font-weight: 500; border-left: 3px solid var(--accent);
   }
 
   /* ===== QUESTION ITEMS ===== */
   .q-item {
     border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px;
-    margin-bottom: 12px; transition: all 0.2s ease;
-    background: white;
+    margin-bottom: 10px; transition: all 0.15s ease;
   }
-  .q-item:hover { border-color: var(--gray-300); }
   .q-item.passed { border-color: var(--green); background: #f0fdf4; }
   .q-item.failed { border-color: var(--red); background: #fef2f2; }
-  .q-item .q-text { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-  .q-item .q-note { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; background: var(--gray-50); padding: 8px 10px; border-radius: 6px; }
+  .q-item .q-text { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .q-item .q-note {
+    font-size: 12px; color: var(--gray-500); background: var(--gray-50);
+    padding: 8px 10px; border-radius: 6px; margin-bottom: 10px; line-height: 1.5;
+  }
   .q-item .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .q-item .q-actions button {
-    padding: 5px 18px; border: 1px solid var(--gray-300); border-radius: 8px;
-    font-size: 13px; cursor: pointer; background: white; transition: all 0.15s ease;
+    padding: 5px 18px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
+    font-size: 13px; cursor: pointer; background: white; transition: all 0.12s ease;
     font-weight: 500;
   }
   .q-item .q-actions button.pass-btn { color: var(--green); border-color: var(--green); }
-  .q-item .q-actions button.pass-btn:hover { background: var(--green); color: white; border-color: var(--green); }
+  .q-item .q-actions button.pass-btn:hover { background: var(--green); color: white; }
   .q-item .q-actions button.fail-btn { color: var(--red); border-color: var(--red); }
-  .q-item .q-actions button.fail-btn:hover { background: var(--red); color: white; border-color: var(--red); }
-  .q-item .q-actions .passed-label { color: var(--green); font-weight: 600; font-size: 13px; }
-  .q-item .q-actions .failed-label { color: var(--red); font-weight: 600; font-size: 13px; }
+  .q-item .q-actions button.fail-btn:hover { background: var(--red); color: white; }
+  .q-item .q-actions .status-label { font-size: 13px; font-weight: 600; padding: 4px 0; }
+  .q-item .q-actions .status-label.pass { color: var(--green); }
+  .q-item .q-actions .status-label.fail { color: var(--red); }
 
   .stop-signal {
-    margin-top: 20px; padding: 14px 16px; border-radius: 8px;
-    background: #eef2ff; border: 1px dashed var(--accent); font-size: 13px; color: var(--accent-dark);
+    margin-top: 18px; padding: 14px 16px; border-radius: 8px;
+    background: #eef2ff; border: 1px dashed var(--accent); font-size: 13px; color: var(--accent-dark); line-height: 1.5;
   }
-  .stop-signal strong { display: block; margin-bottom: 4px; }
+  .stop-signal::before { content: '\26A0\FE0F  '; }
 
   /* ===== IMPROVEMENT INPUT ===== */
   .improve-input-wrap { margin-top: 12px; display: none; }
@@ -254,7 +232,6 @@
     transition: background 0.15s;
   }
   .improve-input-wrap .save-btn:hover { background: var(--accent-dark); }
-  .improve-input-wrap .saved-note { color: var(--green); font-size: 13px; font-weight: 500; margin-top: 6px; }
 
   /* ===== LAYER ACTIONS ===== */
   .layer-actions {
@@ -262,23 +239,23 @@
     border-top: 1px solid var(--gray-200); padding-top: 20px;
   }
   .layer-actions button {
-    padding: 8px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
-    cursor: pointer; border: none; transition: all 0.15s ease;
+    padding: 8px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none; transition: all 0.12s ease;
   }
-  .layer-actions .next-btn {
-    background: var(--accent); color: white;
-  }
+  .layer-actions .next-btn { background: var(--accent); color: white; }
   .layer-actions .next-btn:hover { background: var(--accent-dark); }
-  .layer-actions .next-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .layer-actions .next-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .layer-actions .footer-hint {
+    font-size: 12px; color: var(--gray-400); margin-right: auto; align-self: center;
+  }
 
   /* ===== RESULTS ===== */
   .result-list { list-style: none; padding: 0; }
   .result-list li {
     padding: 12px 16px; border-left: 3px solid var(--accent);
     background: var(--gray-100); margin-bottom: 8px; border-radius: 0 8px 8px 0;
-    font-size: 14px; transition: background 0.15s;
+    font-size: 14px; line-height: 1.5;
   }
-  .result-list li:hover { background: var(--gray-200); }
   .result-list li .result-tag {
     display: inline-block; font-size: 11px; font-weight: 600;
     padding: 1px 8px; border-radius: 4px; margin-right: 8px;
@@ -292,32 +269,36 @@
   .result-list li .result-tag.b { background: #d1fae5; color: #065f46; }
   .result-list li .result-tag.c { background: #fef3c7; color: #92400e; }
 
+  .export-btn, .restart-btn {
+    display: inline-block; padding: 10px 24px; border-radius: var(--radius-sm);
+    font-size: 14px; cursor: pointer; font-weight: 500; transition: all 0.12s;
+    margin-top: 16px;
+  }
   .export-btn {
-    display: inline-block; padding: 10px 24px; background: var(--green); color: white;
-    border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 500;
-    transition: all 0.15s;
+    background: var(--green); color: white; border: none;
   }
-  .export-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .export-btn:hover { background: var(--green-dark); }
   .restart-btn {
-    display: inline-block; padding: 10px 24px; background: white; color: var(--gray-500);
-    border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; cursor: pointer;
-    margin-top: 16px; margin-left: 12px; font-weight: 500;
-    transition: all 0.15s;
+    background: white; color: var(--gray-500); border: 1px solid var(--gray-300);
+    margin-left: 10px;
   }
-  .restart-btn:hover { background: var(--gray-100); border-color: var(--gray-500); }
+  .restart-btn:hover { background: var(--gray-100); }
 
   .hidden { display: none !important; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 500px) {
     .container { padding: 16px; }
-    .hero { padding: 32px 0 8px; }
+    .hero { padding: 28px 0 8px; }
     .hero h1 { font-size: 28px; }
     .hero .tagline { font-size: 15px; }
     .hero-cta { padding: 12px 24px; font-size: 15px; }
     .card { padding: 20px 16px; }
+    .q-item { padding: 14px; }
     .q-item .q-actions { flex-direction: column; }
-    .profile-row { flex-direction: column; }
+    .q-item .q-actions button { width: 100%; text-align: center; }
+    .layer-actions { flex-direction: column; align-items: stretch; }
+    .layer-actions .footer-hint { text-align: center; margin-right: 0; }
   }
 </style>
 </head>
@@ -325,52 +306,66 @@
 
 <div class="container" id="app">
 
-  <!-- ===== HOME SCREEN (wrapped for showScreen toggle) ===== -->
   <div id="screenHome">
+
     <div class="hero">
-      <div class="hero-badge">品质追问方法论</div>
       <h1>无穷追问</h1>
       <div class="sub">persistent-asking</div>
       <p class="tagline">
         不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。
       </p>
       <button class="hero-cta" onclick="scrollToPaths()">
-        开始追问 <span class="arrow">→</span>
+        开始追问
       </button>
     </div>
 
+    <div class="why">
+      <p>我们每天都在判断——代码、设计、方案、决策。"好不好"没有标准答案，但"哪里不够好"可以被追问暴露。这套框架提供结构化的追问路径，帮你系统逼近良质。不是评分表，不是清单，是一组让你自己问出答案的问题。</p>
+    </div>
+
     <div class="how-section" id="pathsSection">
-      <div class="how-title">选择你的追问路径</div>
+      <div class="how-title">选择路径</div>
       <div class="how-grid">
         <div class="how-card ref-card" onclick="startFunnel('ref')">
-          <div class="icon-badge">🔍</div>
-          <h3>我有参考样本</h3>
-          <p>有同类优秀作品可以做对比时，走这套标准路径——前置找靶 → P0逻辑 → P1目标 → P2对比 → P3边界 → P4直觉。</p>
-          <span class="path-tag">5层追问路径</span>
+          <div class="icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <h3>有参考样本</h3>
+          <p>有同类优秀作品可以做对比时，走标准路径——找靶、逻辑、目标、比较、边界、直觉。</p>
+          <div class="steps-preview">
+            <span>前置</span><span class="dot"></span>
+            <span>P0</span><span class="dot"></span>
+            <span>P1</span><span class="dot"></span>
+            <span>P2</span><span class="dot"></span>
+            <span>P3</span><span class="dot"></span>
+            <span>P4</span>
+          </div>
         </div>
         <div class="how-card noref-card" onclick="startFunnel('noref')">
-          <div class="icon-badge">🧭</div>
-          <h3>我没有参考样本</h3>
-          <p>面对全新领域、没有类比对象时，走这套路线——必要条件拆解 → 极值定位 → 快速反馈闭环。</p>
-          <span class="path-tag">无参考系路径</span>
+          <div class="icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#b45309"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3>无参考样本</h3>
+          <p>面对全新领域、没有类比对象时，走另一条路——必要条件、极值定位、快速反馈。</p>
+          <div class="steps-preview">
+            <span>A</span><span class="dot"></span>
+            <span>B</span><span class="dot"></span>
+            <span>C</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ===== FOOTER ===== -->
     <div class="footer">
       <div class="footer-links">
-        <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">
-          <span class="gh-icon"></span> GitHub
-        </a>
-        <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈建议</a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈</a>
         <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">完整方法论</a>
       </div>
-      <p>无穷追问 · 不定义"好"，只追问"不够好"</p>
+      <p>无穷追问</p>
     </div>
   </div>
 
-  <!-- ===== FUNNEL / RESULT SCREENS ===== -->
   <div class="progress-wrap hidden" id="progressWrap">
     <div class="progress-bar" id="progressBar"></div>
   </div>
@@ -383,156 +378,124 @@
 
 const LAYERS_REF = [
   {
-    id: 'pre', label: '前置·找靶', short: '前置',
-    question: '动手前先找优秀样本做参考',
-    badges: ['pre'],
+    id: 'pre', label: '前置 | 找靶', short: '前置',
+    question: '动手前有没有找优秀样本做参考？',
     items: [
-      { text: '搜靶：找到 3-5 个同类优秀样本（结构类似、跨领域也行）', note: '不一定要完全相同，关键是建立一个参考坐标' },
-      { text: '拆靶：分析好在哪里——结构、标准、细节特征', note: '不只是看结果，要提取出"它为什么好"的结构性原因' },
-      { text: '定靶：确定本次参考的主要靶子', note: '不是要超越它，是要有坐标系——过程中随时回看' }
-    ]
+      { text: '搜到 3-5 个同类优秀样本了吗？不一定要完全相同，跨领域也行', note: '关键在于建立一个参考坐标，不只是"感觉应该怎么做"' },
+      { text: '拆出它好在哪里了吗？结构、标准、细节特征', note: '不只是看结果，要提取"它为什么好"的结构性原因' },
+      { text: '确定本次参考的靶子了吗？', note: '不是要超越它，是要有坐标系——过程中随时回看瞄一眼' }
+    ],
+    stop: '有一个明确的参考基准放在手边，知道"做到什么程度算及格"'
   },
   {
-    id: 'p0', label: 'P0 逻辑一致性', short: 'P0',
+    id: 'p0', label: 'P0 | 逻辑一致性', short: 'P0',
     question: '这个产出有没有自相矛盾的地方？',
-    badges: ['P0'],
     items: [
-      { text: '论点之间有先后关系 → "这里的主张和前面说的矛盾吗？"' },
-      { text: '多个标准并存 → "判断 A 用的标准和判断 B 用的标准一致吗？"' },
-      { text: '因果链条较长 → "推出这个结论需要哪几步前提？每一步站得住吗？"' }
+      { text: '论点之间有先后关系："这里的主张和前面说的矛盾吗？"' },
+      { text: '多个标准并存："判断 A 和判断 B 用的是同一套标准吗？"' },
+      { text: '因果链条较长："推出这个结论需要几步前提？每一步站得住吗？"' }
     ],
-    stop: '每个主张都能用同一套标准贯串。不出现"因为X所以Y但这里又因为notY所以Z"的循环。'
+    stop: '每个主张都能用同一套标准贯穿。不出现"因为X所以Y但在Z上又推翻Y"的循环'
   },
   {
-    id: 'p1', label: 'P1 目标对齐', short: 'P1',
+    id: 'p1', label: 'P1 | 目标对齐', short: 'P1',
     question: '这个产出真的在解决最初要解决的问题吗？',
-    badges: ['P1'],
     items: [
-      { text: '方案已成型 → "最初要解决什么问题？现在的方案真的在解决它吗？"' },
-      { text: '有多个目标 → "这些目标之间有冲突吗？你在优先哪一个？为什么？"' },
-      { text: '受众不明确 → "这个产出给谁看的？他们关心什么？"' }
+      { text: '方案已成型："最初要解决什么问题？现在的方案真的在解决它吗？"' },
+      { text: '有多个目标："这些目标之间有冲突吗？你在优先哪一个？为什么？"' },
+      { text: '受众不明确："这个产出给谁看的？他们关心什么？"' }
     ],
-    stop: '产出的每个主要部分都能明确回答"它服务于哪个目标"。被追问时不会出现"顺手做的"这种回答。'
+    stop: '产出的每个主要部分都能明确回答"它服务于哪个目标"'
   },
   {
-    id: 'p2', label: 'P2 比较覆盖', short: 'P2',
+    id: 'p2', label: 'P2 | 比较覆盖', short: 'P2',
     question: '有没有被排除的选项？排除的理由站得住吗？',
-    badges: ['P2'],
     items: [
-      { text: '方案已选定 → "为什么选 A 不选 B？排除 B 的理由是什么？"' },
-      { text: '貌似唯一解 → "真的只有这一种做法？有没有被你默认排除的选项？"' },
-      { text: '有明显权衡 → "选了 A 之后损失了什么？这个损失你能接受吗？"' }
+      { text: '方案已选定："为什么选 A 不选 B？排除 B 的理由是什么？"' },
+      { text: '貌似唯一解："真的只有这一种做法？有没有被你默认排除的选项？"' },
+      { text: '有明显权衡："选了 A 之后损失了什么？这个损失你能接受吗？"' }
     ],
-    stop: '每个被排除的选项都有明确的可复述理由。不是"感觉A更好"，而是"因为X、Y、Z原因，A比B更适合这个场景"。'
+    stop: '每个被排除的选项都有明确、可复述的排除理由'
   },
   {
-    id: 'p3', label: 'P3 边界排查', short: 'P3',
+    id: 'p3', label: 'P3 | 边界排查', short: 'P3',
     question: '极端情况下这个产出还能站住吗？',
-    badges: ['P3'],
     items: [
-      { text: '输入有边界 → "如果输入比预期大/小/乱/极端，结果会怎样？"' },
-      { text: '场景假设 → "这个方案成立的前提假设是什么？如果假设不成立呢？"' },
-      { text: '鲁棒性 → "哪个环节最容易出问题？出问题后有没有回退方案？"' }
+      { text: '输入有边界："如果输入比预期大/小/乱/极端，结果会怎样？"' },
+      { text: '前提假设："这个方案成立的前提是什么？如果前提不成立呢？"' },
+      { text: '鲁棒性："哪个环节最容易出问题？出问题后怎么补救？"' }
     ],
-    stop: '能列出 3 个以上的可能故障点，每个都有应对预案（或明确声明"这个风险接受了"）。'
+    stop: '能列出 3 个以上可能故障点，每个都有应对预案（或声明"接受这个风险"）'
   },
   {
-    id: 'p4', label: 'P4 感官直觉', short: 'P4',
+    id: 'p4', label: 'P4 | 感官直觉', short: 'P4',
     question: '去掉所有理由，只看结果本身，感觉对吗？',
-    badges: ['P4'],
     items: [
-      { text: '审美判断 → "如果去掉所有解释，只看结果本身，你舒服吗？"' },
-      { text: '隐隐不对 → "有没有某个地方你觉得"怪怪的"但说不清为什么？"' },
-      { text: '整体感 → "把它和优秀的同类并列放在一起，它会显得突兀吗？"' }
+      { text: '审美判断："如果去掉所有解释，只看结果本身，你舒服吗？"' },
+      { text: '隐隐不对："有没有某个地方你觉得怪怪的但说不清为什么？"' },
+      { text: '整体感："把它和优秀的同类放在一起，它会显得突兀吗？"' }
     ],
-    stop: '完全没有任何"隐隐的不对劲"残留。如果感觉说"还不对"，退回 P0-P3 去排查具体原因。'
+    stop: '没有"隐隐的不对劲"残留。如果感觉不对，退回 P0-P3 排查具体原因'
   }
 ];
 
 const LAYERS_NOREF = [
   {
-    id: 'a', label: 'A层 必要条件', short: 'A层',
+    id: 'a', label: 'A | 必要条件', short: 'A',
     question: '这个产出最不能违背什么？',
-    badges: ['ext', 'A'],
     items: [
-      { text: '全新领域 → "如果不允许失败，哪些条件是必须满足的？"' },
-      { text: '约束不清晰 → "哪些是硬约束（不满足就不可接受），哪些是软约束（可以妥协）？"' },
-      { text: '目标模糊 → "哪怕其他方面都很差，唯一不能搞砸的是哪一点？"' }
+      { text: '全新领域："如果不允许失败，哪些条件是必须满足的？"' },
+      { text: '约束不清晰："哪些是硬约束（不满足就不可接受），哪些可以妥协？"' },
+      { text: '目标模糊："哪怕其他方面都很差，唯一不能搞砸的是哪一点？"' }
     ],
-    stop: '列出不可违背清单，每条都能明确回答"违反了会怎样"。'
+    stop: '列出不可违背清单，每条都能回答"违反了会怎样"'
   },
   {
-    id: 'b', label: 'B层 极值定位', short: 'B层',
+    id: 'b', label: 'B | 极值定位', short: 'B',
     question: '最好和最差之间，我站在哪里？',
-    badges: ['ext', 'B'],
     items: [
-      { text: '没有坐标 → "最差结果长什么样？最好结果（不考虑成本）长什么样？"' },
-      { text: '资源有限 → "在当前资源下，这两个极端之间哪个点最合理？"' },
-      { text: '决策纠结 → "如果我往左偏和往右偏，分别会多付出/损失什么？"' }
+      { text: '没有坐标："最差结果长什么样？最好结果（不考虑成本）长什么样？"' },
+      { text: '资源有限："在当前资源下，两个极端之间哪个点最合理？"' },
+      { text: '决策纠结："往左偏和往右偏，分别会多付出或损失什么？"' }
     ],
-    stop: '能画出"极差↔合理↔极好"的坐标轴，并标注自己的位置以及选择理由。'
+    stop: '能画出"极差 - 合理 - 极好"的坐标轴，标注自己的位置和理由'
   },
   {
-    id: 'c', label: 'C层 快速反馈', short: 'C层',
+    id: 'c', label: 'C | 快速反馈', short: 'C',
     question: '真实世界怎么说？',
-    badges: ['ext', 'C'],
     items: [
-      { text: '无样本 → "最小可验证版本是什么？最快多久能拿到第一个反馈？"' },
-      { text: '假设过多 → "这条假设如果不成立，最快要多久能验证出来？"' },
-      { text: '方向不确定 → "需要多少人/多少次反馈才能判断方向对了？"' }
+      { text: '无样本："最小可验证版本是什么？最快多久能拿到第一个反馈？"' },
+      { text: '假设过多："这条假设如果不成立，最快要多久能验证出来？"' },
+      { text: '方向不确定："需要多少反馈才能判断方向对了？"' }
     ],
-    stop: '收到 2-3 个独立反馈后，能明确说出"哪个方向对了/错了"。'
+    stop: '收到 2-3 个独立反馈后，能说出"哪个方向对了"'
   }
 ];
 
-// ===== STATE =====
-
-let state = {
-  mode: null,
-  currentLayer: 0,
-  layers: [],
-  improvements: []
-};
-
-// ===== SCROLL =====
+let state = { mode: null, currentLayer: 0, layers: [], improvements: [] };
 
 function scrollToPaths() {
   document.getElementById('pathsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ===== RENDER =====
-
 function render() {
-  const layers = state.layers;
-  const idx = state.currentLayer;
-  const layer = layers[idx];
-  const done = idx >= layers.length;
-
-  if (done) {
-    renderResult();
-    return;
-  }
-
+  const layers = state.layers, idx = state.currentLayer;
+  if (idx >= layers.length) { renderResult(); return; }
   renderProgress(layers, idx);
-  renderFunnel(layer, idx, layers);
+  renderFunnel(layers[idx], idx, layers);
 }
 
 function renderProgress(layers, currentIdx) {
-  const wrap = document.getElementById('progressWrap');
-  const bar = document.getElementById('progressBar');
+  const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
   wrap.classList.remove('hidden');
-
   bar.innerHTML = '';
   layers.forEach((l, i) => {
     const step = document.createElement('span');
     step.className = 'progress-step';
     if (i < currentIdx) step.classList.add('done');
-    if (i === currentIdx) {
-      step.classList.add('active', 'current');
-    }
+    if (i === currentIdx) step.classList.add('active', 'current');
     step.textContent = l.short || l.label;
     bar.appendChild(step);
-
     if (i < layers.length - 1) {
       const line = document.createElement('span');
       line.className = 'progress-line';
@@ -545,168 +508,125 @@ function renderProgress(layers, currentIdx) {
 function renderFunnel(layer, idx, layers) {
   showScreen('screenFunnel');
   const el = document.getElementById('screenFunnel');
-
   let itemsHtml = '';
   layer.items.forEach((item, i) => {
     const saved = state.improvements.find(imp => imp.layer === (idx + '-' + i));
     const statusClass = saved ? (saved.text ? 'failed' : 'passed') : '';
-    const savedLabel = saved
-      ? (saved.text
-          ? `<span class="failed-label">✗ 需要改进</span>`
-          : `<span class="passed-label">✓ 已确认</span>`)
-      : '';
-
+    const statusLabel = saved ? (saved.text
+      ? '<span class="status-label fail">\u2717 需改进</span>'
+      : '<span class="status-label pass">\u2713 没问题</span>') : '';
     itemsHtml += `
-      <div class="q-item ${statusClass}" data-idx="${i}">
+      <div class="q-item ${statusClass}">
         <div class="q-text">${item.text}</div>
-        ${item.note ? `<div class="q-note">💡 ${item.note}</div>` : ''}
-        <div class="q-actions" id="qactions-${idx}-${i}">
-          ${saved
-            ? savedLabel
-            : `<button class="pass-btn" onclick="markPass(${idx},${i})">✓ 没问题</button>
-               <button class="fail-btn" onclick="showImprove(${idx},${i})">✗ 需要改进</button>`
-          }
+        ${item.note ? `<div class="q-note">${item.note}</div>` : ''}
+        <div class="q-actions" id="qa-${idx}-${i}">
+          ${saved ? statusLabel
+            : `<button class="pass-btn" onclick="markPass(${idx},${i})">\u2713 没问题</button>
+               <button class="fail-btn" onclick="showImprove(${idx},${i})">\u2717 需改进</button>`}
         </div>
-        <div class="improve-input-wrap" id="improve-${idx}-${i}">
-          <textarea placeholder="记录具体改进点..." id="improveText-${idx}-${i}"></textarea>
+        <div class="improve-input-wrap" id="imp-${idx}-${i}">
+          <textarea placeholder="具体改进点..." id="impT-${idx}-${i}"></textarea>
           <button class="save-btn" onclick="saveImprove(${idx},${i})">保存</button>
-          <div class="saved-note hidden" id="savedNote-${idx}-${i}">✓ 已保存</div>
         </div>
       </div>`;
   });
-
-  const badgesHtml = (layer.badges || []).map(b =>
-    `<span class="card-badge ${b === 'pre' ? 'pre' : b === 'ext' ? 'ext' : ''}">${b}</span>`
-  ).join('');
-
+  const badgesHtml = (layer.badges||[]).map(b => `<span class="card-badge ${b==='pre'?'pre':b==='ext'?'ext':''}">${b}</span>`).join('');
   const isLast = idx === layers.length - 1;
-  const canProceed = layer.items.every((_, i) =>
-    state.improvements.some(imp => imp.layer === (idx + '-' + i))
-  );
-
+  const canProceed = layer.items.every((_,i) => state.improvements.some(imp => imp.layer === (idx+'-'+i)));
   el.innerHTML = `
     <div class="card">
       <div class="card-header">
         ${badgesHtml}
         <div class="card-title">${layer.label}</div>
+        <span class="card-counter">${idx+1}/${layers.length}</span>
       </div>
       <div class="card-question">${layer.question}</div>
       ${itemsHtml}
-      ${layer.stop ? `<div class="stop-signal"><strong>🛑 终止信号：</strong>${layer.stop}</div>` : ''}
+      ${layer.stop ? `<div class="stop-signal">终止信号：${layer.stop}</div>` : ''}
       <div class="layer-actions">
-        <button class="next-btn" onclick="nextLayer()" ${!canProceed ? 'disabled' : ''}>
-          ${isLast ? '📋 查看结果' : '下一步 →'}
-        </button>
+        <span class="footer-hint">全部确认后可进入下一步</span>
+        <button class="next-btn" onclick="nextLayer()" ${!canProceed?'disabled':''}>${isLast?'\uD83D\uDCCB 查看结果':'下一步'}</button>
       </div>
-    </div>
-    <p style="text-align:center;font-size:12px;color:var(--gray-500);">
-      ${idx + 1} / ${layers.length} · 所有项目确认后方可进入下一步
-    </p>
-  `;
+    </div>`;
 }
 
 function renderResult() {
   showScreen('screenResult');
   const el = document.getElementById('screenResult');
-
   const hasIssues = state.improvements.some(imp => imp.text);
-
   let listHtml = '';
   if (hasIssues) {
-    listHtml = '<h3 style="margin-bottom:16px;">📋 改进清单</h3><ul class="result-list">';
+    listHtml = '<h3 style="margin-bottom:16px;">改进清单</h3><ul class="result-list">';
     state.improvements.forEach(imp => {
       if (!imp.text) return;
       const layerId = imp.layer.split('-')[0];
       const layer = state.layers.find(l => l.id === layerId);
-      const tag = layer ? (layer.short || layer.id) : layerId;
-      const tagClass = (layerId === 'pre') ? 'p0' : layerId;
+      const tag = layer ? (layer.short||layer.id) : layerId;
+      const tagClass = layerId === 'pre' ? 'p0' : layerId;
       listHtml += `<li><span class="result-tag ${tagClass}">${tag}</span>${imp.text}</li>`;
     });
     listHtml += '</ul>';
   } else {
-    listHtml = `
-      <div style="text-align:center;padding:32px 0;">
-        <div style="font-size:48px;margin-bottom:16px;">✨</div>
-        <h3 style="margin-bottom:8px;">全部通过</h3>
-        <p style="color:var(--gray-500);font-size:14px;">每一层都没有发现"不够好"的地方。可以放心交付了。</p>
-      </div>
-    `;
+    listHtml = '<div style="text-align:center;padding:32px 0;"><div style="font-size:40px;margin-bottom:12px;">\u2728</div><h3 style="margin-bottom:6px;">全部通过</h3><p style="color:var(--gray-500);font-size:14px;">每层都没有发现问题。可以放心交付了。</p></div>';
   }
-
   const total = state.improvements.length;
-  const issues = state.improvements.filter(i => i.text).length;
+  const issues = state.improvements.filter(i=>i.text).length;
   const clean = total - issues;
-
   el.innerHTML = `
     <div class="card">
       <div class="card-header">
         <span class="card-badge" style="background:var(--green);">结果</span>
         <div class="card-title">追问完成</div>
       </div>
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">
-        共检查 ${layers.length} 层 · ${state.layers.map(l => l.short || l.id).join(' → ')}
-      </p>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">共检查 ${state.layers.length} 层</p>
       <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
         <div style="flex:1;text-align:center;padding:12px;background:#f0fdf4;border-radius:8px;">
           <div style="font-size:24px;font-weight:700;color:var(--green);">${clean}</div>
-          <div style="font-size:12px;color:var(--gray-500);">已确认无问题</div>
+          <div style="font-size:12px;color:var(--gray-500);">已确认</div>
         </div>
-        <div style="flex:1;text-align:center;padding:12px;background:${hasIssues ? '#fef2f2' : '#f0fdf4'};border-radius:8px;">
-          <div style="font-size:24px;font-weight:700;color:${hasIssues ? 'var(--red)' : 'var(--green)'};">${issues}</div>
-          <div style="font-size:12px;color:var(--gray-500);">需改进项</div>
+        <div style="flex:1;text-align:center;padding:12px;background:${hasIssues?'#fef2f2':'#f0fdf4'};border-radius:8px;">
+          <div style="font-size:24px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">${issues}</div>
+          <div style="font-size:12px;color:var(--gray-500);">需改进</div>
         </div>
       </div>
       ${listHtml}
-      <div style="margin-top:24px;display:flex;flex-wrap:wrap;">
-        <button class="export-btn" onclick="exportResult()">📥 导出清单</button>
-        <button class="restart-btn" onclick="resetAll()">🔄 重新开始</button>
+      <div style="margin-top:24px;">
+        <button class="export-btn" onclick="exportResult()">导出清单</button>
+        <button class="restart-btn" onclick="resetAll()">重新开始</button>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-// ===== ACTIONS =====
-
 function startFunnel(mode) {
-  state.mode = mode;
-  state.currentLayer = 0;
-  state.improvements = [];
-  state.layers = mode === 'ref' ? LAYERS_REF : LAYERS_NOREF;
-  // Scroll to top on mobile
+  state = { mode, currentLayer: 0, improvements: [], layers: mode==='ref' ? LAYERS_REF : LAYERS_NOREF };
   window.scrollTo({ top: 0, behavior: 'smooth' });
   render();
 }
 
 function markPass(layerIdx, itemIdx) {
-  state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx + '-' + itemIdx));
-  state.improvements.push({ layer: layerIdx + '-' + itemIdx, itemIndex: itemIdx, text: '' });
+  state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx+'-'+itemIdx));
+  state.improvements.push({ layer: layerIdx+'-'+itemIdx, itemIndex: itemIdx, text: '' });
   render();
 }
 
 function showImprove(layerIdx, itemIdx) {
-  const wrap = document.getElementById(`improve-${layerIdx}-${itemIdx}`);
+  const wrap = document.getElementById('imp-'+layerIdx+'-'+itemIdx);
   if (wrap) wrap.classList.add('show');
 }
 
 function saveImprove(layerIdx, itemIdx) {
-  const textarea = document.getElementById(`improveText-${layerIdx}-${itemIdx}`);
-  const note = document.getElementById(`savedNote-${layerIdx}-${itemIdx}`);
-  const text = textarea.value.trim() || '需要改进（未记录具体内容）';
-
-  state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx + '-' + itemIdx));
-  state.improvements.push({ layer: layerIdx + '-' + itemIdx, itemIndex: itemIdx, text });
-  note.classList.remove('hidden');
-  textarea.disabled = true;
+  const t = document.getElementById('impT-'+layerIdx+'-'+itemIdx);
+  const text = (t.value||'').trim() || '（待改进）';
+  state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx+'-'+itemIdx));
+  state.improvements.push({ layer: layerIdx+'-'+itemIdx, itemIndex: itemIdx, text });
+  t.disabled = true;
   render();
 }
 
-function nextLayer() {
-  state.currentLayer++;
-  render();
-}
+function nextLayer() { state.currentLayer++; render(); }
 
 function showScreen(id) {
-  ['screenHome', 'screenFunnel', 'screenResult'].forEach(s => {
+  ['screenHome','screenFunnel','screenResult'].forEach(s => {
     document.getElementById(s).classList.toggle('hidden', s !== id);
   });
 }
@@ -719,22 +639,15 @@ function resetAll() {
 
 function exportResult() {
   const issues = state.improvements.filter(i => i.text);
-  if (issues.length === 0) {
-    alert('全部通过，无需导出。');
-    return;
-  }
-
-  let text = '# 无穷追问改进清单\n\n';
-  let i = 1;
-  issues.forEach(imp => {
+  if (!issues.length) { alert('全部通过，无需导出。'); return; }
+  let text = '# \u65E0\u7A77\u8FFD\u95EE\u6539\u8FDB\u6E05\u5355\n\n';
+  issues.forEach((imp, i) => {
     const layerId = imp.layer.split('-')[0];
     const layer = state.layers.find(l => l.id === layerId);
-    const tag = layer ? (layer.short || layer.label) : layerId;
-    text += `${i}. [${tag}] ${imp.text}\n`;
-    i++;
+    const tag = layer ? (layer.short||layer.label) : layerId;
+    text += (i+1) + '. [' + tag + '] ' + imp.text + '\n';
   });
-  text += '\n--\n无穷追问 · persistent-asking';
-
+  text += '\n--\n\u65E0\u7A77\u8FFD\u95EE \u00B7 persistent-asking';
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -742,8 +655,6 @@ function exportResult() {
   a.click();
   URL.revokeObjectURL(a.href);
 }
-
-// ===== INIT =====
 
 showScreen('screenHome');
 </script>
