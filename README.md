@@ -185,7 +185,7 @@ If you jump to C without A, you're testing blind — you don't know what you're 
 
 ## Interactive Tool
 
-**→ [Try the Keep-Asking Funnel](https://YOUR_USERNAME.github.io/keep-asking)**
+**→ [Try the Keep-Asking Funnel](https://n0-5iGn4L.github.io/keep-asking)**
 
 A step-by-step web tool that guides you through the funnel:
 - Choose your scenario (with/without reference)
