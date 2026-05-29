@@ -3,22 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>追问 — keep-asking quality funnel</title>
+<title>无穷追问 — persistent-asking quality funnel</title>
 <style>
   :root {
-    --blue: #3b82f6;
-    --blue-dark: #1d4ed8;
-    --green: #22c55e;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --accent-dark: #4f46e5;
+    --green: #10b981;
+    --green-dark: #059669;
     --red: #ef4444;
     --amber: #f59e0b;
-    --gray-50: #fafafa;
-    --gray-100: #f4f4f5;
-    --gray-200: #e4e4e7;
-    --gray-300: #d4d4d8;
-    --gray-500: #71717a;
-    --gray-700: #3f3f46;
-    --gray-900: #18181b;
+    --amber-light: #fbbf24;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --gray-900: #0f172a;
     --radius: 12px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -27,221 +35,348 @@
     color: var(--gray-900);
     line-height: 1.6;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
   .container { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; }
 
-  /* Header */
-  .header { text-align: center; padding: 48px 0 24px; }
-  .header h1 {
-    font-size: 32px; font-weight: 700; letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--blue), var(--green));
+  /* ===== HERO ===== */
+  .hero {
+    text-align: center; padding: 56px 0 16px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    padding: 4px 14px; border-radius: 20px;
+    background: rgba(99,102,241,0.08); color: var(--accent);
+    letter-spacing: 0.3px; margin-bottom: 20px;
+    border: 1px solid rgba(99,102,241,0.15);
+  }
+  .hero h1 {
+    font-size: 38px; font-weight: 800; letter-spacing: -1px; line-height: 1.2;
+    background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-bottom: 12px; position: relative;
   }
-  .header .sub {
-    font-size: 14px; color: var(--gray-500); margin-top: 8px;
+  .hero .sub {
+    font-size: 14px; color: var(--gray-500); margin-bottom: 20px;
+    letter-spacing: 1px;
   }
-  .header .tagline {
-    font-size: 16px; color: var(--gray-700); margin-top: 16px; font-weight: 500;
+  .hero .tagline {
+    font-size: 17px; color: var(--gray-600); font-weight: 400;
+    margin-bottom: 32px;
+    max-width: 480px; margin-left: auto; margin-right: auto;
+  }
+  .hero .tagline em {
+    font-style: normal; color: var(--accent); font-weight: 600;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 32px; background: var(--accent); color: white;
+    border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
+    cursor: pointer; transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+  }
+  .hero-cta:hover {
+    background: var(--accent-dark); transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+  }
+  .hero-cta:active { transform: translateY(0); }
+  .hero-cta .arrow { transition: transform 0.2s; }
+  .hero-cta:hover .arrow { transform: translateX(4px); }
+
+  /* ===== HOW IT WORKS ===== */
+  .how-section { margin: 40px 0 32px; }
+  .how-title {
+    font-size: 14px; font-weight: 600; color: var(--gray-500);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 20px; text-align: center;
+  }
+  .how-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .how-card {
+    background: white; border-radius: var(--radius);
+    padding: 28px 24px; border: 1px solid var(--gray-200);
+    transition: all 0.25s ease;
+    text-align: left; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .how-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    transition: all 0.3s;
+  }
+  .how-card.ref-card::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+  .how-card.noref-card::before { background: linear-gradient(90deg, var(--amber), var(--amber-light)); }
+  .how-card:hover {
+    border-color: var(--accent-light);
+    box-shadow: var(--shadow-md); transform: translateY(-3px);
+  }
+  .how-card:active { transform: translateY(-1px); }
+  .how-card .icon-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 10px;
+    font-size: 20px; margin-bottom: 14px;
+  }
+  .how-card.ref-card .icon-badge { background: rgba(99,102,241,0.1); }
+  .how-card.noref-card .icon-badge { background: rgba(245,158,11,0.1); }
+  .how-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .how-card p { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
+  .how-card .path-tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 10px; border-radius: 6px; margin-top: 12px;
+    letter-spacing: 0.3px;
+  }
+  .how-card.ref-card .path-tag { background: rgba(99,102,241,0.08); color: var(--accent); }
+  .how-card.noref-card .path-tag { background: rgba(245,158,11,0.1); color: #b45309; }
+
+  @media (max-width: 600px) {
+    .how-grid { grid-template-columns: 1fr; }
   }
 
-  /* Progress Bar */
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: 48px; text-align: center; padding-top: 24px;
+    border-top: 1px solid var(--gray-200);
+  }
+  .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 13px; color: var(--gray-500); text-decoration: none;
+    transition: color 0.2s; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-links a .gh-icon {
+    width: 16px; height: 16px; display: inline-block;
+    background: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") no-repeat center;
+    mask-size: contain;
+  }
+  .footer p { font-size: 12px; color: var(--gray-500); margin-top: 12px; }
+
+  /* ===== PROGRESS ===== */
   .progress-wrap { margin: 24px 0; }
   .progress-bar {
     display: flex; align-items: center; gap: 4px;
     overflow-x: auto; padding: 4px 0;
+    scrollbar-width: none;
   }
+  .progress-bar::-webkit-scrollbar { display: none; }
   .progress-step {
     flex-shrink: 0; padding: 4px 12px; border-radius: 20px;
     font-size: 12px; font-weight: 500; background: var(--gray-200); color: var(--gray-500);
-    transition: all 0.2s; white-space: nowrap;
+    transition: all 0.3s ease; white-space: nowrap;
   }
-  .progress-step.active { background: var(--blue); color: white; }
+  .progress-step.active { background: var(--accent); color: white; }
   .progress-step.done { background: var(--green); color: white; }
-  .progress-step.current { box-shadow: 0 0 0 2px var(--blue); }
+  .progress-step.current { box-shadow: 0 0 0 2px var(--accent); }
   .progress-line {
     flex-shrink: 0; width: 12px; height: 2px; background: var(--gray-200);
+    transition: background 0.3s;
   }
   .progress-line.done { background: var(--green); }
 
-  /* Card */
+  /* ===== CARD ===== */
   .card {
     background: white; border-radius: var(--radius);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06); padding: 28px 24px;
-    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm); padding: 28px 24px;
+    margin-bottom: 16px; border: 1px solid var(--gray-200);
   }
   .card-header {
     display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
   }
   .card-badge {
-    font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 10px;
-    background: var(--blue); color: white; text-transform: uppercase; letter-spacing: 0.5px;
+    font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px;
+    background: var(--accent); color: white; text-transform: uppercase; letter-spacing: 0.5px;
   }
   .card-badge.pre { background: var(--amber); }
-  .card-badge.ext { background: var(--gray-700); }
-  .card-title { font-size: 18px; font-weight: 600; }
+  .card-badge.ext { background: var(--gray-600); }
+  .card-badge[style*="green"] { background: var(--green) !important; }
+  .card-title { font-size: 18px; font-weight: 700; }
   .card-question {
     font-size: 15px; color: var(--gray-700); padding: 12px 16px;
     background: var(--gray-100); border-radius: 8px; margin-bottom: 20px;
-    font-weight: 500;
+    font-weight: 500; border-left: 3px solid var(--accent);
   }
 
-  /* Question items */
+  /* ===== QUESTION ITEMS ===== */
   .q-item {
-    border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px;
-    margin-bottom: 12px; transition: all 0.2s;
+    border: 1px solid var(--gray-200); border-radius: 10px; padding: 16px;
+    margin-bottom: 12px; transition: all 0.2s ease;
+    background: white;
   }
+  .q-item:hover { border-color: var(--gray-300); }
   .q-item.passed { border-color: var(--green); background: #f0fdf4; }
   .q-item.failed { border-color: var(--red); background: #fef2f2; }
   .q-item .q-text { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-  .q-item .q-note { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; }
+  .q-item .q-note { font-size: 12px; color: var(--gray-500); margin-bottom: 10px; background: var(--gray-50); padding: 8px 10px; border-radius: 6px; }
   .q-item .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .q-item .q-actions button {
-    padding: 4px 16px; border: 1px solid var(--gray-300); border-radius: 6px;
-    font-size: 13px; cursor: pointer; background: white; transition: all 0.15s;
+    padding: 5px 18px; border: 1px solid var(--gray-300); border-radius: 8px;
+    font-size: 13px; cursor: pointer; background: white; transition: all 0.15s ease;
+    font-weight: 500;
   }
   .q-item .q-actions button.pass-btn { color: var(--green); border-color: var(--green); }
-  .q-item .q-actions button.pass-btn:hover { background: var(--green); color: white; }
+  .q-item .q-actions button.pass-btn:hover { background: var(--green); color: white; border-color: var(--green); }
   .q-item .q-actions button.fail-btn { color: var(--red); border-color: var(--red); }
-  .q-item .q-actions button.fail-btn:hover { background: var(--red); color: white; }
+  .q-item .q-actions button.fail-btn:hover { background: var(--red); color: white; border-color: var(--red); }
   .q-item .q-actions .passed-label { color: var(--green); font-weight: 600; font-size: 13px; }
   .q-item .q-actions .failed-label { color: var(--red); font-weight: 600; font-size: 13px; }
 
   .stop-signal {
     margin-top: 20px; padding: 14px 16px; border-radius: 8px;
-    background: #f0f9ff; border: 1px dashed var(--blue); font-size: 13px; color: var(--blue-dark);
+    background: #eef2ff; border: 1px dashed var(--accent); font-size: 13px; color: var(--accent-dark);
   }
   .stop-signal strong { display: block; margin-bottom: 4px; }
 
-  /* Improvement input */
-  .improve-input-wrap {
-    margin-top: 12px; display: none;
+  /* ===== IMPROVEMENT INPUT ===== */
+  .improve-input-wrap { margin-top: 12px; display: none; }
+  .improve-input-wrap.show { display: block; animation: fadeSlideIn 0.2s ease; }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .improve-input-wrap.show { display: block; }
   .improve-input-wrap textarea {
     width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300);
     border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical;
     min-height: 60px; outline: none; transition: border-color 0.2s;
   }
-  .improve-input-wrap textarea:focus { border-color: var(--blue); }
+  .improve-input-wrap textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
   .improve-input-wrap .save-btn {
-    margin-top: 8px; padding: 6px 20px; background: var(--blue); color: white;
+    margin-top: 8px; padding: 6px 20px; background: var(--accent); color: white;
     border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500;
+    transition: background 0.15s;
   }
-  .improve-input-wrap .save-btn:hover { background: var(--blue-dark); }
+  .improve-input-wrap .save-btn:hover { background: var(--accent-dark); }
   .improve-input-wrap .saved-note { color: var(--green); font-size: 13px; font-weight: 500; margin-top: 6px; }
 
-  /* Layer actions */
+  /* ===== LAYER ACTIONS ===== */
   .layer-actions {
     display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;
     border-top: 1px solid var(--gray-200); padding-top: 20px;
   }
   .layer-actions button {
     padding: 8px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
-    cursor: pointer; border: none; transition: all 0.15s;
+    cursor: pointer; border: none; transition: all 0.15s ease;
   }
   .layer-actions .next-btn {
-    background: var(--blue); color: white;
+    background: var(--accent); color: white;
   }
-  .layer-actions .next-btn:hover { background: var(--blue-dark); }
+  .layer-actions .next-btn:hover { background: var(--accent-dark); }
   .layer-actions .next-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* Home buttons */
-  .home-btns { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
-  .home-btn {
-    flex: 1; min-width: 200px; padding: 32px 24px; border-radius: var(--radius);
-    background: white; border: 2px solid var(--gray-200); cursor: pointer;
-    text-align: center; transition: all 0.2s;
-  }
-  .home-btn:hover { border-color: var(--blue); box-shadow: 0 4px 12px rgba(59,130,246,0.15); transform: translateY(-2px); }
-  .home-btn .icon { font-size: 36px; margin-bottom: 12px; }
-  .home-btn .label { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-  .home-btn .desc { font-size: 13px; color: var(--gray-500); }
-
-  /* Results */
+  /* ===== RESULTS ===== */
   .result-list { list-style: none; padding: 0; }
   .result-list li {
-    padding: 12px 16px; border-left: 3px solid var(--blue);
-    background: var(--gray-100); margin-bottom: 8px; border-radius: 0 6px 6px 0;
-    font-size: 14px;
+    padding: 12px 16px; border-left: 3px solid var(--accent);
+    background: var(--gray-100); margin-bottom: 8px; border-radius: 0 8px 8px 0;
+    font-size: 14px; transition: background 0.15s;
   }
+  .result-list li:hover { background: var(--gray-200); }
   .result-list li .result-tag {
     display: inline-block; font-size: 11px; font-weight: 600;
     padding: 1px 8px; border-radius: 4px; margin-right: 8px;
   }
-  .result-list li .result-tag.p0 { background: #dbeafe; color: #1d4ed8; }
-  .result-list li .result-tag.p1 { background: #dcfce7; color: #15803d; }
-  .result-list li .result-tag.p2 { background: #fef9c3; color: #a16207; }
-  .result-list li .result-tag.p3 { background: #fce7f3; color: #be185d; }
-  .result-list li .result-tag.p4 { background: #f3e8ff; color: #7c3aed; }
-  .result-list li .result-tag.a { background: #dbeafe; color: #1d4ed8; }
-  .result-list li .result-tag.b { background: #dcfce7; color: #15803d; }
-  .result-list li .result-tag.c { background: #fef9c3; color: #a16207; }
+  .result-list li .result-tag.p0 { background: #e0e7ff; color: var(--accent-dark); }
+  .result-list li .result-tag.p1 { background: #d1fae5; color: #065f46; }
+  .result-list li .result-tag.p2 { background: #fef3c7; color: #92400e; }
+  .result-list li .result-tag.p3 { background: #fce7f3; color: #9d174d; }
+  .result-list li .result-tag.p4 { background: #ede9fe; color: #6d28d9; }
+  .result-list li .result-tag.a { background: #e0e7ff; color: var(--accent-dark); }
+  .result-list li .result-tag.b { background: #d1fae5; color: #065f46; }
+  .result-list li .result-tag.c { background: #fef3c7; color: #92400e; }
 
   .export-btn {
     display: inline-block; padding: 10px 24px; background: var(--green); color: white;
     border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 500;
-    margin-top: 16px;
+    transition: all 0.15s;
   }
-  .export-btn:hover { opacity: 0.9; }
-
+  .export-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
   .restart-btn {
     display: inline-block; padding: 10px 24px; background: white; color: var(--gray-500);
     border: 1px solid var(--gray-300); border-radius: 8px; font-size: 14px; cursor: pointer;
     margin-top: 16px; margin-left: 12px; font-weight: 500;
+    transition: all 0.15s;
   }
-  .restart-btn:hover { background: var(--gray-100); }
+  .restart-btn:hover { background: var(--gray-100); border-color: var(--gray-500); }
 
   .hidden { display: none !important; }
 
-  /* Responsive */
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 500px) {
     .container { padding: 16px; }
-    .header { padding: 32px 0 16px; }
-    .header h1 { font-size: 26px; }
+    .hero { padding: 32px 0 8px; }
+    .hero h1 { font-size: 28px; }
+    .hero .tagline { font-size: 15px; }
+    .hero-cta { padding: 12px 24px; font-size: 15px; }
     .card { padding: 20px 16px; }
-    .home-btn { min-width: 100%; }
     .q-item .q-actions { flex-direction: column; }
+    .profile-row { flex-direction: column; }
   }
 </style>
 </head>
 <body>
 
 <div class="container" id="app">
-  <!-- Header -->
-  <div class="header">
-    <h1>追问</h1>
-    <div class="sub">keep-asking</div>
-    <div class="tagline">不定义"什么是好"，追问出"哪里不够好"</div>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-badge">品质追问方法论</div>
+    <h1>无穷追问</h1>
+    <div class="sub">persistent-asking</div>
+    <p class="tagline">
+      不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。
+    </p>
+    <button class="hero-cta" onclick="scrollToPaths()">
+      开始追问 <span class="arrow">→</span>
+    </button>
   </div>
 
-  <!-- Progress -->
+  <!-- ===== HOW IT WORKS ===== -->
+  <div class="how-section" id="pathsSection">
+    <div class="how-title">选择你的追问路径</div>
+    <div class="how-grid">
+      <div class="how-card ref-card" onclick="startFunnel('ref')">
+        <div class="icon-badge">🔍</div>
+        <h3>我有参考样本</h3>
+        <p>有同类优秀作品可以做对比时，走这套标准路径——前置找靶 → P0逻辑 → P1目标 → P2对比 → P3边界 → P4直觉。</p>
+        <span class="path-tag">5层追问路径</span>
+      </div>
+      <div class="how-card noref-card" onclick="startFunnel('noref')">
+        <div class="icon-badge">🧭</div>
+        <h3>我没有参考样本</h3>
+        <p>面对全新领域、没有类比对象时，走这套路线——必要条件拆解 → 极值定位 → 快速反馈闭环。</p>
+        <span class="path-tag">无参考系路径</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROGRESS ===== -->
   <div class="progress-wrap hidden" id="progressWrap">
     <div class="progress-bar" id="progressBar"></div>
   </div>
 
-  <!-- Screens -->
-  <div id="screenHome">
-    <p style="text-align:center;color:var(--gray-500);font-size:14px;margin-top:8px;">
-      一套结构化的追问框架，帮你系统性地逼近"好"。
-    </p>
-    <div class="home-btns">
-      <button class="home-btn" onclick="startFunnel('ref')">
-        <div class="icon">🔍</div>
-        <div class="label">我有参考样本</div>
-        <div class="desc">走标准 5 层追问路径（P0-P4）<br>先找靶 → 逻辑 → 目标 → 对比 → 边界 → 直觉</div>
-      </button>
-      <button class="home-btn" onclick="startFunnel('noref')">
-        <div class="icon">🧭</div>
-        <div class="label">我没有参考样本</div>
-        <div class="desc">走无参考系路径（A-B-C）<br>必要条件 → 极值定位 → 快速反馈</div>
-      </button>
-    </div>
-  </div>
-
+  <!-- ===== SCREENS ===== -->
   <div id="screenFunnel" class="hidden"></div>
   <div id="screenResult" class="hidden"></div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    <div class="footer-links">
+      <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">
+        <span class="gh-icon"></span> GitHub
+      </a>
+      <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈建议</a>
+      <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">完整方法论</a>
+    </div>
+    <p>无穷追问 · 不定义"好"，只追问"不够好"</p>
+  </div>
 </div>
 
 <script>
@@ -354,11 +489,17 @@ const LAYERS_NOREF = [
 // ===== STATE =====
 
 let state = {
-  mode: null,       // 'ref' | 'noref'
+  mode: null,
   currentLayer: 0,
   layers: [],
-  improvements: []  // [{layer, itemIndex, text}]
+  improvements: []
 };
+
+// ===== SCROLL =====
+
+function scrollToPaths() {
+  document.getElementById('pathsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 // ===== RENDER =====
 
@@ -406,7 +547,6 @@ function renderFunnel(layer, idx, layers) {
   showScreen('screenFunnel');
   const el = document.getElementById('screenFunnel');
 
-  // Build items HTML
   let itemsHtml = '';
   layer.items.forEach((item, i) => {
     const saved = state.improvements.find(imp => imp.layer === (idx + '-' + i));
@@ -436,8 +576,9 @@ function renderFunnel(layer, idx, layers) {
       </div>`;
   });
 
-  // Badges
-  const badgesHtml = (layer.badges || []).map(b => `<span class="card-badge ${b === 'pre' ? 'pre' : b === 'ext' ? 'ext' : ''}">${b}</span>`).join('');
+  const badgesHtml = (layer.badges || []).map(b =>
+    `<span class="card-badge ${b === 'pre' ? 'pre' : b === 'ext' ? 'ext' : ''}">${b}</span>`
+  ).join('');
 
   const isLast = idx === layers.length - 1;
   const canProceed = layer.items.every((_, i) =>
@@ -493,7 +634,6 @@ function renderResult() {
     `;
   }
 
-  // Summary stats
   const total = state.improvements.length;
   const issues = state.improvements.filter(i => i.text).length;
   const clean = total - issues;
@@ -505,7 +645,7 @@ function renderResult() {
         <div class="card-title">追问完成</div>
       </div>
       <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">
-        共检查 ${layers.length} 层 · ${state.layers.length > 0 ? state.layers.map(l => l.short || l.id).join(' → ') : ''}
+        共检查 ${layers.length} 层 · ${state.layers.map(l => l.short || l.id).join(' → ')}
       </p>
       <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
         <div style="flex:1;text-align:center;padding:12px;background:#f0fdf4;border-radius:8px;">
@@ -533,11 +673,12 @@ function startFunnel(mode) {
   state.currentLayer = 0;
   state.improvements = [];
   state.layers = mode === 'ref' ? LAYERS_REF : LAYERS_NOREF;
+  // Scroll to top on mobile
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   render();
 }
 
 function markPass(layerIdx, itemIdx) {
-  // Remove any previous entry
   state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx + '-' + itemIdx));
   state.improvements.push({ layer: layerIdx + '-' + itemIdx, itemIndex: itemIdx, text: '' });
   render();
@@ -584,7 +725,7 @@ function exportResult() {
     return;
   }
 
-  let text = '# 追问改进清单\n\n';
+  let text = '# 无穷追问改进清单\n\n';
   let i = 1;
   issues.forEach(imp => {
     const layerId = imp.layer.split('-')[0];
@@ -593,18 +734,18 @@ function exportResult() {
     text += `${i}. [${tag}] ${imp.text}\n`;
     i++;
   });
+  text += '\n--\n无穷追问 · persistent-asking';
 
   const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'keep-asking-checklist.txt';
+  a.download = 'persistent-asking-checklist.txt';
   a.click();
   URL.revokeObjectURL(a.href);
 }
 
 // ===== INIT =====
 
-const layers = []; // placeholder for result screen use
 showScreen('screenHome');
 </script>
 
