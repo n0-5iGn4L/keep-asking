@@ -6,262 +6,230 @@
 <title>无穷追问 — persistent-asking</title>
 <style>
   :root {
-    --bg: #0a0a0f;
-    --bg-elevated: #111118;
-    --bg-card: rgba(17,17,24,0.7);
-    --border: rgba(255,255,255,0.07);
-    --border-hover: rgba(129,140,248,0.35);
-    --text-primary: #e2e8f0;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --accent: #818cf8;
-    --accent-light: #a5b4fc;
-    --accent-dark: #6366f1;
-    --accent-glow: rgba(129,140,248,0.25);
-    --green: #34d399;
-    --green-glow: rgba(52,211,153,0.15);
-    --red: #f87171;
-    --red-glow: rgba(248,113,113,0.15);
-    --amber: #fbbf24;
-    --amber-glow: rgba(251,191,36,0.15);
-    --radius: 14px;
-    --radius-sm: 8px;
+    --bg: #f6f6f4;
+    --bg-elevated: #fff;
+    --bg-card: #fff;
+    --border: #222;
+    --border-light: #ccc;
+    --text-primary: #111;
+    --text-secondary: #555;
+    --text-muted: #999;
+    --accent: #111;
+    --accent-light: #555;
+    --green: #006600;
+    --red: #cc0000;
+    --amber: #996600;
+    --radius: 0;
+    --radius-sm: 0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-family: "IBM Plex Mono", "JetBrains Mono", "Source Code Pro", "Cascadia Code", Consolas, "Courier New", monospace;
     background: var(--bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
-  .container { max-width: 720px; margin: 0 auto; padding: 0 20px 80px; }
+  .container { max-width: 640px; margin: 0 auto; padding: 0 20px 80px; }
 
-  /* Hero */
-  .hero { text-align: center; padding: 80px 0 24px; position: relative; }
-  .hero::before {
-    content: ''; position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
-    width: 500px; height: 300px; background: radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%);
-    pointer-events: none;
+  /* ===== HERO ===== */
+  .hero { padding: 100px 0 32px; position: relative; }
+  .hero-badge {
+    display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--text-primary);
+    border: 2px solid var(--text-primary); padding: 4px 14px; margin-bottom: 32px;
   }
-  .hero-icon {
-    width: 64px; height: 64px; margin: 0 auto 24px;
-    position: relative; z-index: 1;
-    animation: pulse-soft 4s ease-in-out infinite;
-  }
-  .hero-icon svg { width: 100%; height: 100%; }
   .hero h1 {
-    font-size: 48px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1;
-    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 50%, var(--accent-dark) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 12px; position: relative; z-index: 1;
-    text-shadow: 0 0 40px rgba(129,140,248,0.15);
+    font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 0.95;
+    color: var(--text-primary); margin-bottom: 8px;
   }
-  .hero .sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
-  .hero .tagline { font-size: 18px; color: var(--text-secondary); max-width: 480px; margin: 0 auto 36px; line-height: 1.7; }
-  .hero .tagline em { font-style: normal; color: var(--accent-light); font-weight: 500; }
+  .hero .sub { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; letter-spacing: 1px; text-transform: uppercase; }
+  .hero .tagline { font-size: 16px; color: var(--text-secondary); max-width: 480px; line-height: 1.7; }
+  .hero .tagline em { font-style: normal; background: #111; color: #f6f6f4; padding: 0 4px; }
   .hero-cta {
-    display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px;
-    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-    color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600;
-    cursor: pointer; transition: all 0.25s ease;
-    box-shadow: 0 4px 20px rgba(99,102,241,0.3), 0 0 0 1px rgba(255,255,255,0.1) inset;
-    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px;
+    background: var(--text-primary); color: var(--bg); border: 2px solid var(--text-primary);
+    font-size: 14px; font-weight: 600; font-family: inherit;
+    cursor: pointer; transition: all 0.15s ease; margin-top: 32px;
   }
-  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.4), 0 0 0 1px rgba(255,255,255,0.15) inset; }
-  .hero-cta .arrow { transition: transform 0.2s; }
-  .hero-cta:hover .arrow { transform: translateX(3px); }
+  .hero-cta:hover { background: transparent; color: var(--text-primary); }
+  .hero-cta .arrow { transition: transform 0.15s; }
+  .hero-cta:hover .arrow { transform: translateX(4px); }
 
-  .why { max-width: 520px; margin: 32px auto 20px; text-align: center; }
-  .why p { font-size: 14px; color: var(--text-muted); line-height: 1.9; }
+  .sep-line { border: none; border-top: 2px solid var(--text-primary); margin: 0 0 40px; }
 
-  /* Cards */
-  .how-section { margin: 40px 0; }
-  .how-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 18px; text-align: center; }
-  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  /* Why */
+  .why { margin: 0 0 40px; }
+  .why p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; }
+
+  /* ===== CARDS ===== */
+  .how-section { margin: 0 0 48px; }
+  .how-title { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
   .how-card {
-    background: var(--bg-card); border-radius: var(--radius); padding: 28px 24px;
-    border: 1px solid var(--border); backdrop-filter: blur(12px);
-    transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
+    background: var(--bg-card); border: 2px solid var(--text-primary);
+    padding: 28px 24px; cursor: pointer; transition: all 0.15s ease;
+    position: relative;
   }
-  .how-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0.7; }
-  .how-card.ref-card::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); box-shadow: 0 0 12px var(--accent-glow); }
-  .how-card.noref-card::before { background: linear-gradient(90deg, var(--amber), #fcd34d); box-shadow: 0 0 12px var(--amber-glow); }
-  .how-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(129,140,248,0.1); }
+  .how-card:hover { background: #111; color: #f6f6f4; }
+  .how-card:hover h3 { color: #f6f6f4; }
+  .how-card:hover p { color: #ccc; }
+  .how-card:hover .icon-wrap svg { stroke: #f6f6f4; }
+  .how-card:hover .steps-preview { color: #999; }
+  .how-card:hover .steps-preview .dot { background: #999; }
   .how-card .icon-wrap {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 42px; height: 42px; border-radius: 12px; margin-bottom: 16px;
-    background: rgba(129,140,248,0.1); border: 1px solid rgba(129,140,248,0.15);
+    width: 36px; height: 36px; margin-bottom: 16px;
+    border: 2px solid var(--text-primary); padding: 6px;
   }
-  .how-card.noref-card .icon-wrap { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.15); }
-  .how-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
-  .how-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
-  .how-card .steps-preview { margin-top: 14px; font-size: 11px; color: var(--text-muted); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-  .how-card .steps-preview .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); display: inline-block; opacity: 0.5; }
+  .how-card .icon-wrap svg { stroke: var(--text-primary); }
+  .how-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); transition: color 0.15s; }
+  .how-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; transition: color 0.15s; }
+  .how-card .steps-preview { margin-top: 16px; font-size: 11px; color: var(--text-muted); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .how-card .steps-preview .dot { width: 3px; height: 3px; background: var(--text-muted); display: inline-block; }
   @media (max-width: 600px) { .how-grid { grid-template-columns: 1fr; } }
 
-  /* Preflight */
-  .preflight { margin-top: 20px; }
+  /* ===== PREFLIGHT ===== */
+  .preflight { margin-top: 0; }
   .preflight-card {
-    background: var(--bg-card); border-radius: var(--radius); padding: 32px 28px;
-    border: 1px solid var(--border); backdrop-filter: blur(12px);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    background: var(--bg-card); border: 2px solid var(--text-primary); padding: 32px 28px;
   }
   .preflight-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
-  .preflight-card .steps { margin: 20px 0; }
+  .preflight-card p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+  .preflight-card .steps { margin: 20px 0; padding: 0; list-style: none; counter-reset: step; }
   .preflight-card .steps li {
     font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.7;
-    list-style: none; padding-left: 28px; position: relative;
+    padding-left: 32px; position: relative; list-style: none;
   }
   .preflight-card .steps li::before {
-    content: ''; position: absolute; left: 0; top: 6px; width: 16px; height: 16px;
-    border-radius: 50%; border: 2px solid var(--accent); color: var(--accent);
-    font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    counter-increment: step; content: counter(step) ".";
+    position: absolute; left: 0; top: 0; font-weight: 700; color: var(--text-primary);
   }
-  .preflight-card .steps li:nth-child(1)::before { content: '1'; }
-  .preflight-card .steps li:nth-child(2)::before { content: '2'; }
-  .preflight-card .steps li:nth-child(3)::before { content: '3'; }
-  .preflight-card .steps li em { font-style: normal; color: var(--accent-light); font-weight: 500; }
+  .preflight-card .steps li em { font-style: normal; font-weight: 700; color: var(--text-primary); }
   .preflight-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
   .preflight-actions button {
-    padding: 10px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500;
-    cursor: pointer; border: none; transition: all 0.2s ease;
+    padding: 10px 24px; font-size: 13px; font-weight: 600; font-family: inherit;
+    cursor: pointer; border: 2px solid var(--text-primary); transition: all 0.15s ease;
   }
-  .preflight-actions .ready-btn {
-    background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-    color: white; box-shadow: 0 4px 16px rgba(99,102,241,0.25);
-  }
-  .preflight-actions .ready-btn:hover { box-shadow: 0 6px 24px rgba(99,102,241,0.4); transform: translateY(-1px); }
-  .preflight-actions .skip-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
-  .preflight-actions .skip-btn:hover { border-color: var(--text-secondary); color: var(--text-secondary); }
+  .preflight-actions .ready-btn { background: var(--text-primary); color: var(--bg); }
+  .preflight-actions .ready-btn:hover { background: transparent; color: var(--text-primary); }
+  .preflight-actions .skip-btn { background: transparent; color: var(--text-muted); border-color: var(--border-light); }
+  .preflight-actions .skip-btn:hover { border-color: var(--text-primary); color: var(--text-primary); }
 
-  /* Footer */
-  .footer { margin-top: 48px; text-align: center; padding-top: 24px; border-top: 1px solid var(--border); }
-  .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
-  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--accent-light); }
-  .footer p { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+  /* ===== FOOTER ===== */
+  .footer { margin-top: 48px; padding-top: 24px; border-top: 2px solid var(--text-primary); }
+  .footer-links { display: flex; justify-content: flex-start; gap: 28px; flex-wrap: wrap; }
+  .footer-links a { font-size: 12px; color: var(--text-muted); text-decoration: none; letter-spacing: 0.5px; }
+  .footer-links a:hover { color: var(--text-primary); text-decoration: underline; }
+  .footer p { font-size: 11px; color: var(--border-light); margin-top: 12px; text-transform: uppercase; letter-spacing: 1px; }
 
-  /* Progress */
+  /* ===== PROGRESS ===== */
   .progress-wrap { margin: 24px 0; }
-  .progress-bar { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 4px 0; scrollbar-width: none; }
+  .progress-bar { display: flex; align-items: center; gap: 4px; overflow-x: auto; padding: 4px 0; scrollbar-width: none; }
   .progress-bar::-webkit-scrollbar { display: none; }
   .progress-step {
-    flex-shrink: 0; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 600;
-    background: rgba(255,255,255,0.05); color: var(--text-muted); transition: all 0.3s ease; white-space: nowrap; border: 1px solid transparent;
+    flex-shrink: 0; padding: 4px 12px; font-size: 11px; font-weight: 600;
+    background: var(--bg); color: var(--text-muted); white-space: nowrap;
+    border: 1px solid var(--border-light); font-family: inherit;
   }
-  .progress-step.active { background: rgba(99,102,241,0.2); color: var(--accent-light); border-color: rgba(99,102,241,0.3); box-shadow: 0 0 12px rgba(99,102,241,0.1); }
-  .progress-step.done { background: rgba(52,211,153,0.15); color: var(--green); border-color: rgba(52,211,153,0.2); }
-  .progress-step.current { box-shadow: 0 0 0 2px var(--accent), 0 0 12px var(--accent-glow); }
-  .progress-line { flex-shrink: 0; width: 16px; height: 1px; background: rgba(255,255,255,0.08); transition: background 0.3s; }
-  .progress-line.done { background: rgba(52,211,153,0.4); }
+  .progress-step.active { background: var(--text-primary); color: var(--bg); border-color: var(--text-primary); }
+  .progress-step.done { color: var(--green); border-color: var(--green); }
+  .progress-step.current { border-width: 2px; }
+  .progress-line { flex-shrink: 0; width: 12px; height: 1px; background: var(--border-light); }
+  .progress-line.done { background: var(--green); }
 
-  /* Funnel Card */
-  .card {
-    background: var(--bg-card); border-radius: var(--radius); padding: 32px 28px;
-    margin-bottom: 16px; border: 1px solid var(--border); backdrop-filter: blur(12px);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-  }
+  /* ===== FUNNEL CARD ===== */
+  .card { background: var(--bg-card); border: 2px solid var(--text-primary); padding: 32px 28px; margin-bottom: 16px; }
   .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-  .card-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--accent); color: white; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.4; }
-  .card-badge.pre { background: var(--amber); }
-  .card-badge.ext { background: var(--text-muted); }
+  .card-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; background: var(--text-primary); color: var(--bg); letter-spacing: 0.5px; }
   .card-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
   .card-counter { margin-left: auto; font-size: 12px; color: var(--text-muted); font-weight: 500; }
   .card-question {
     font-size: 15px; color: var(--text-primary); padding: 14px 18px;
-    background: rgba(129,140,248,0.06); border-radius: var(--radius-sm);
-    margin-bottom: 22px; font-weight: 500; border-left: 3px solid var(--accent);
+    background: #eee; margin-bottom: 22px; font-weight: 600;
   }
 
-  .q-item { border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 12px; transition: all 0.2s ease; }
-  .q-item:hover { border-color: rgba(255,255,255,0.12); }
-  .q-item.passed { border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.04); }
-  .q-item.failed { border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.04); }
-  .q-item .q-text { font-size: 14px; font-weight: 500; margin-bottom: 8px; color: var(--text-primary); }
-  .q-item .q-note { font-size: 12px; color: var(--text-secondary); background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; line-height: 1.5; }
+  .q-item { border: 1px solid var(--border-light); padding: 18px; margin-bottom: 10px; }
+  .q-item.passed { border-color: var(--green); border-width: 2px; }
+  .q-item.failed { border-color: var(--red); border-width: 2px; }
+  .q-item .q-text { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-primary); }
+  .q-item .q-note { font-size: 12px; color: var(--text-secondary); padding: 10px 12px; margin-bottom: 12px; line-height: 1.5; background: #f0f0ee; }
   .q-item .q-actions { display: flex; gap: 10px; flex-wrap: wrap; }
   .q-item .q-actions button {
-    padding: 6px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm);
-    font-size: 13px; cursor: pointer; background: transparent; transition: all 0.15s ease;
-    font-weight: 500; color: var(--text-secondary);
+    padding: 5px 18px; border: 1px solid var(--border-light); font-size: 12px; font-family: inherit;
+    cursor: pointer; background: transparent; transition: all 0.15s ease; font-weight: 500; color: var(--text-secondary);
   }
-  .q-item .q-actions button.pass-btn { color: var(--green); border-color: rgba(52,211,153,0.3); }
-  .q-item .q-actions button.pass-btn:hover { background: rgba(52,211,153,0.1); border-color: var(--green); }
-  .q-item .q-actions button.fail-btn { color: var(--red); border-color: rgba(248,113,113,0.3); }
-  .q-item .q-actions button.fail-btn:hover { background: rgba(248,113,113,0.1); border-color: var(--red); }
-  .q-item .q-actions .s-label { font-size: 13px; font-weight: 600; padding: 4px 0; }
+  .q-item .q-actions button.pass-btn { color: var(--green); border-color: var(--green); }
+  .q-item .q-actions button.pass-btn:hover { background: var(--green); color: #fff; }
+  .q-item .q-actions button.fail-btn { color: var(--red); border-color: var(--red); }
+  .q-item .q-actions button.fail-btn:hover { background: var(--red); color: #fff; }
+  .q-item .q-actions .s-label { font-size: 12px; font-weight: 700; padding: 4px 0; }
   .q-item .q-actions .s-label.pass { color: var(--green); }
   .q-item .q-actions .s-label.fail { color: var(--red); }
 
   .stop-signal {
-    margin-top: 20px; padding: 14px 18px; border-radius: 8px;
-    background: rgba(251,191,36,0.06); border: 1px dashed rgba(251,191,36,0.25);
-    font-size: 13px; color: var(--amber); line-height: 1.6;
+    margin-top: 20px; padding: 14px 18px;
+    border: 1px dashed var(--amber); background: rgba(153,102,0,0.03);
+    font-size: 12px; color: var(--amber); line-height: 1.6;
   }
   .stop-signal::before { content: '\26A0\FE0F  '; }
 
   .improve-input-wrap { margin-top: 12px; display: none; }
-  .improve-input-wrap.show { display: block; animation: fadeSlideIn 0.25s ease; }
-  @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes pulse-soft { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.06); opacity: 1; } }
-  @keyframes screenFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .improve-input-wrap.show { display: block; animation: fadeSlideIn 0.2s ease; }
+  @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes screenFadeIn { from { opacity: 0; } to { opacity: 1; } }
   .improve-input-wrap textarea {
-    width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px;
-    font-size: 13px; font-family: inherit; resize: vertical; min-height: 64px;
-    outline: none; transition: all 0.2s; background: rgba(255,255,255,0.03); color: var(--text-primary);
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border-light);
+    font-size: 13px; font-family: inherit; resize: vertical; min-height: 60px;
+    outline: none; transition: border 0.15s; background: #f0f0ee; color: var(--text-primary);
   }
-  .improve-input-wrap textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.15), 0 0 12px rgba(99,102,241,0.08); }
+  .improve-input-wrap textarea:focus { border-color: var(--text-primary); }
   .improve-input-wrap .save-btn {
-    margin-top: 10px; padding: 7px 22px; background: linear-gradient(135deg, var(--accent-dark), var(--accent));
-    color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 500;
+    margin-top: 10px; padding: 6px 20px; background: var(--text-primary);
+    color: var(--bg); border: 1px solid var(--text-primary); font-size: 12px; font-family: inherit;
+    cursor: pointer; font-weight: 600;
   }
-  .improve-input-wrap .save-btn:hover { box-shadow: 0 4px 16px rgba(99,102,241,0.3); }
+  .improve-input-wrap .save-btn:hover { background: transparent; color: var(--text-primary); }
 
-  .layer-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px; border-top: 1px solid var(--border); padding-top: 20px; flex-wrap: wrap; }
-  .layer-actions button { padding: 9px 24px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s ease; }
-  .layer-actions .back-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
-  .layer-actions .back-btn:hover { border-color: var(--text-secondary); color: var(--text-secondary); }
-  .layer-actions .next-btn {
-    background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: white;
-    box-shadow: 0 4px 16px rgba(99,102,241,0.25);
-  }
-  .layer-actions .next-btn:hover { box-shadow: 0 6px 24px rgba(99,102,241,0.35); transform: translateY(-1px); }
-  .layer-actions .next-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+  .layer-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px; border-top: 2px solid var(--text-primary); padding-top: 20px; flex-wrap: wrap; }
+  .layer-actions button { padding: 8px 22px; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; border: 2px solid var(--text-primary); transition: all 0.15s ease; }
+  .layer-actions .back-btn { background: transparent; color: var(--text-muted); border-color: var(--border-light); }
+  .layer-actions .back-btn:hover { border-color: var(--text-primary); color: var(--text-primary); }
+  .layer-actions .next-btn { background: var(--text-primary); color: var(--bg); }
+  .layer-actions .next-btn:hover { background: transparent; color: var(--text-primary); }
+  .layer-actions .next-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-  /* Result */
+  /* ===== RESULT ===== */
   .result-list { list-style: none; padding: 0; margin-bottom: 16px; }
   .result-list li {
-    padding: 14px 18px; border-left: 3px solid var(--accent);
-    background: rgba(129,140,248,0.04); margin-bottom: 10px;
-    border-radius: 0 10px 10px 0; font-size: 14px; line-height: 1.6; color: var(--text-primary);
-    transition: background 0.15s;
+    padding: 12px 16px; border-left: 3px solid var(--text-primary);
+    background: #f0f0ee; margin-bottom: 8px; font-size: 13px; line-height: 1.6; color: var(--text-primary);
   }
-  .result-list li:hover { background: rgba(129,140,248,0.08); }
   .result-list li .r-tag {
-    display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px;
-    border-radius: 4px; margin-right: 10px; text-transform: uppercase; letter-spacing: 0.3px;
-    vertical-align: middle;
+    display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px;
+    margin-right: 8px; letter-spacing: 0.3px; vertical-align: middle;
+    background: var(--text-primary); color: var(--bg);
   }
-  .result-list li .r-tag.p0 { background: rgba(248,113,113,0.2); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
-  .result-list li .r-tag.p1 { background: rgba(251,191,36,0.15); color: var(--amber); border: 1px solid rgba(251,191,36,0.15); }
-  .result-list li .r-tag.p2 { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.08); }
+  .result-list li .r-tag.p0 { background: var(--red); color: #fff; }
+  .result-list li .r-tag.p1 { background: var(--amber); color: #fff; }
+  .result-list li .r-tag.p2 { background: var(--border-light); color: var(--text-primary); }
 
-  .export-btn, .restart-btn { display: inline-block; padding: 10px 24px; border-radius: var(--radius-sm); font-size: 14px; cursor: pointer; font-weight: 500; transition: all 0.15s; margin-top: 16px; }
-  .export-btn {
-    background: linear-gradient(135deg, #059669, var(--green)); color: white; border: none;
-    box-shadow: 0 4px 16px rgba(52,211,153,0.2);
-  }
-  .export-btn:hover { box-shadow: 0 6px 24px rgba(52,211,153,0.3); transform: translateY(-1px); }
-  .restart-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); margin-left: 10px; }
-  .restart-btn:hover { border-color: var(--text-secondary); color: var(--text-secondary); }
+  .export-btn, .restart-btn { display: inline-block; padding: 8px 22px; font-size: 12px; font-family: inherit; cursor: pointer; font-weight: 600; border: 2px solid var(--text-primary); transition: all 0.15s; margin-top: 16px; }
+  .export-btn { background: var(--text-primary); color: var(--bg); }
+  .export-btn:hover { background: transparent; color: var(--text-primary); }
+  .restart-btn { background: transparent; color: var(--text-muted); border-color: var(--border-light); margin-left: 10px; }
+  .restart-btn:hover { border-color: var(--text-primary); color: var(--text-primary); }
 
   .hidden { display: none !important; }
 
   @media (max-width: 500px) {
     .container { padding: 0 16px; }
-    .hero { padding: 48px 0 16px; }
-    .hero h1 { font-size: 36px; }
-    .hero .tagline { font-size: 15px; }
-    .hero-cta { padding: 12px 28px; font-size: 14px; }
+    .hero { padding: 60px 0 20px; }
+    .hero h1 { font-size: 42px; }
+    .hero .tagline { font-size: 14px; }
+    .hero-cta { padding: 12px 24px; width: 100%; justify-content: center; }
     .card { padding: 24px 18px; }
     .q-item { padding: 14px; }
     .q-item .q-actions { flex-direction: column; }
@@ -277,70 +245,52 @@
 
   <div id="screenHome">
     <div class="hero">
-      <div class="hero-icon">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="28" stroke="url(#grad1)" stroke-width="1" opacity="0.3"/>
-          <circle cx="32" cy="32" r="20" stroke="url(#grad1)" stroke-width="1.5" opacity="0.5"/>
-          <circle cx="32" cy="32" r="12" stroke="url(#grad1)" stroke-width="2" opacity="0.8"/>
-          <circle cx="32" cy="32" r="4" fill="url(#grad1)"/>
-          <line x1="32" y1="4" x2="32" y2="12" stroke="url(#grad1)" stroke-width="1.5" opacity="0.6"/>
-          <line x1="32" y1="52" x2="32" y2="60" stroke="url(#grad1)" stroke-width="1.5" opacity="0.6"/>
-          <line x1="4" y1="32" x2="12" y2="32" stroke="url(#grad1)" stroke-width="1.5" opacity="0.6"/>
-          <line x1="52" y1="32" x2="60" y2="32" stroke="url(#grad1)" stroke-width="1.5" opacity="0.6"/>
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#a5b4fc"/>
-              <stop offset="100%" style="stop-color:#6366f1"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+      <div class="hero-badge">QUALITY FUNNEL</div>
       <h1>无穷追问</h1>
       <div class="sub">persistent-asking</div>
       <p class="tagline">不定义什么是<em>"好"</em>，无穷追问出哪里<em>"不够好"</em>。</p>
       <button class="hero-cta" onclick="scrollToPaths()">
-        开始追问 <span class="arrow">→</span>
+        start <span class="arrow">→</span>
       </button>
     </div>
+
+    <hr class="sep-line">
+
     <div class="why">
       <p>我们每天都在判断——代码、设计、方案、决策。"好不好"没有标准答案，但"哪里不够好"可以被追问暴露。不是评分表，不是清单，是一组让你自己问出答案的问题。</p>
     </div>
+
     <div class="how-section" id="pathsSection">
-      <div class="how-title">选择路径</div>
+      <div class="how-title">choose your path</div>
       <div class="how-grid">
-        <div class="how-card ref-card" onclick="startPreflight()">
+        <div class="how-card" onclick="startPreflight()">
           <div class="icon-wrap">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </div>
           <h3>有参考样本</h3>
           <p>有同类优秀作品可以做对比时，走标准路径——逻辑、目标、比较、边界、直觉。</p>
           <div class="steps-preview">
-            <span>P0</span><span class="dot"></span>
-            <span>P1</span><span class="dot"></span>
-            <span>P2</span><span class="dot"></span>
-            <span>P3</span><span class="dot"></span>
-            <span>P4</span>
+            <span>P0</span><span class="dot"></span><span>P1</span><span class="dot"></span><span>P2</span><span class="dot"></span><span>P3</span><span class="dot"></span><span>P4</span>
           </div>
         </div>
-        <div class="how-card noref-card" onclick="startFunnel('noref')">
+        <div class="how-card" onclick="startFunnel('noref')">
           <div class="icon-wrap">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--amber)"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </div>
           <h3>无参考样本</h3>
           <p>面对全新领域、没有类比对象时，走另一条路——必要条件、极值定位、快速反馈。</p>
           <div class="steps-preview">
-            <span>A</span><span class="dot"></span>
-            <span>B</span><span class="dot"></span>
-            <span>C</span>
+            <span>A</span><span class="dot"></span><span>B</span><span class="dot"></span><span>C</span>
           </div>
         </div>
       </div>
     </div>
+
     <div class="footer">
       <div class="footer-links">
         <a href="https://github.com/n0-5iGn4L/persistent-asking" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">反馈</a>
-        <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">方法论</a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking/issues" target="_blank" rel="noopener">issues</a>
+        <a href="https://github.com/n0-5iGn4L/persistent-asking?tab=readme-ov-file#readme" target="_blank" rel="noopener">README</a>
       </div>
       <p>无穷追问 · persistent-asking</p>
     </div>
@@ -348,9 +298,10 @@
 
   <div id="screenPreflight" class="hidden">
     <div class="preflight">
+      <hr class="sep-line">
       <div class="preflight-card">
         <h2>动手前先找靶</h2>
-        <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">选这条路意味着你有同类样本可参考。在正式开始追问前，先做好这件事：</p>
+        <p>选这条路意味着你有同类样本可参考。在正式开始追问前，先做好这件事：</p>
         <ol class="steps">
           <li>搜靶：找到 <em>3-5 个</em>同类优秀样本（结构类似就行，跨领域也可以）</li>
           <li>拆靶：分析好在哪里——<em>结构、标准、细节特征</em></li>
@@ -372,7 +323,7 @@
 </div>
 
 <script>
-// ===== DATA =====
+// ===== DATA (unchanged) =====
 const LAYERS_REF = [
   { id:'p0', label:'P0 | 逻辑一致性', short:'P0',
     question:'这个产出有没有自相矛盾的地方？', priority:'p0',
@@ -420,7 +371,6 @@ const LAYERS_REF = [
     stop:'没有"隐隐的不对劲"残留。如果感觉不对，按顺序退回 P0 → P1 → P2 → P3 排查'
   }
 ];
-
 const LAYERS_NOREF = [
   { id:'a', label:'A | 必要条件', short:'A', question:'这个产出最不能违背什么？', priority:'p0',
     items:[
@@ -446,7 +396,6 @@ const LAYERS_NOREF = [
 ];
 
 let state = { mode: null, currentLayer: 0, layers: [], improvements: [] };
-
 try {
   const saved = sessionStorage.getItem('persistent-asking-state');
   if (saved) {
@@ -458,14 +407,12 @@ try {
     }
   }
 } catch(e) {}
-
 function saveState() {
   try { sessionStorage.setItem('persistent-asking-state', JSON.stringify(state)); } catch(e) {}
 }
 function clearState() {
   try { sessionStorage.removeItem('persistent-asking-state'); } catch(e) {}
 }
-
 function scrollToPaths() {
   document.getElementById('pathsSection').scrollIntoView({ behavior:'smooth', block:'start' });
 }
@@ -480,7 +427,6 @@ function startFunnel(mode) {
   window.scrollTo({ top:0, behavior:'smooth' });
   render();
 }
-
 function render() {
   const layers = state.layers, idx = state.currentLayer;
   if (idx >= layers.length) { renderResult(); return; }
@@ -488,7 +434,6 @@ function render() {
   renderFunnel(layers[idx], idx, layers);
   saveState();
 }
-
 function renderProgress(layers, currentIdx) {
   const wrap = document.getElementById('progressWrap'), bar = document.getElementById('progressBar');
   wrap.classList.remove('hidden');
@@ -508,7 +453,6 @@ function renderProgress(layers, currentIdx) {
     }
   });
 }
-
 function renderFunnel(layer, idx, layers) {
   showScreen('screenFunnel');
   const el = document.getElementById('screenFunnel');
@@ -533,7 +477,7 @@ function renderFunnel(layer, idx, layers) {
   const isLast = idx === layers.length-1;
   const isFirst = idx === 0;
   const canProceed = layer.items.every((_,i) => state.improvements.some(imp => imp.layer === (idx+'-'+i)));
-  el.innerHTML = `<div class="card" style="animation:screenFadeIn 0.35s ease">
+  el.innerHTML = `<div class="card" style="animation:screenFadeIn 0.2s ease">
     <div class="card-header">
       <div class="card-title">${layer.label}</div>
       <span class="card-counter">${idx+1}/${layers.length}</span>
@@ -549,7 +493,6 @@ function renderFunnel(layer, idx, layers) {
     </div>
   </div>`;
 }
-
 function renderResult() {
   showScreen('screenResult');
   const el = document.getElementById('screenResult');
@@ -573,20 +516,20 @@ function renderResult() {
       <span><span class="r-tag p2" style="font-size:10px;">可选改</span> 直觉问题</span>
     </div>`;
   } else {
-    listHtml = '<div style="text-align:center;padding:32px 0;"><div style="font-size:40px;margin-bottom:12px;">&#x2728;</div><h3 style="margin-bottom:6px;color:var(--text-primary);">全部通过</h3><p style="color:var(--text-secondary);font-size:14px;">每层都没有发现问题。可以放心交付了。</p></div>';
+    listHtml = '<div style="text-align:center;padding:32px 0;"><div style="font-size:40px;margin-bottom:12px;">OK</div><h3 style="margin-bottom:6px;color:var(--text-primary);">全部通过</h3><p style="color:var(--text-secondary);font-size:14px;">每层都没有发现问题。可以放心交付了。</p></div>';
   }
   const total = state.improvements.length;
   const issues = state.improvements.filter(i=>i.text).length;
   const clean = total - issues;
-  el.innerHTML = `<div class="card" style="animation:screenFadeIn 0.35s ease">
-    <div class="card-header"><span class="card-badge" style="background:var(--green);">结果</span><div class="card-title">追问完成</div></div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">共检查 ${state.layers.length} 层</p>
+  el.innerHTML = `<div class="card" style="animation:screenFadeIn 0.2s ease">
+    <div class="card-header"><span class="card-badge" style="background:var(--text-primary);color:var(--bg);">结果</span><div class="card-title">追问完成</div></div>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">共检查 ${state.layers.length} 层</p>
     <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
-      <div style="flex:1;text-align:center;padding:14px;background:rgba(52,211,153,0.06);border-radius:10px;border:1px solid rgba(52,211,153,0.1);">
-        <div id="numClean" style="font-size:28px;font-weight:700;color:var(--green);">0</div><div style="font-size:12px;color:var(--text-muted);">已确认</div>
+      <div style="flex:1;text-align:center;padding:14px;border:1px solid var(--green);">
+        <div id="numClean" style="font-size:28px;font-weight:700;color:var(--green);">0</div><div style="font-size:12px;color:var(--text-secondary);">已确认</div>
       </div>
-      <div style="flex:1;text-align:center;padding:14px;background:${hasIssues?'rgba(248,113,113,0.06)':'rgba(52,211,153,0.06)'};border-radius:10px;border:1px solid ${hasIssues?'rgba(248,113,113,0.1)':'rgba(52,211,153,0.1)'};">
-        <div id="numIssues" style="font-size:28px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">0</div><div style="font-size:12px;color:var(--text-muted);">需改进</div>
+      <div style="flex:1;text-align:center;padding:14px;border:1px solid ${hasIssues?'var(--red)':'var(--green)'};">
+        <div id="numIssues" style="font-size:28px;font-weight:700;color:${hasIssues?'var(--red)':'var(--green)'};">0</div><div style="font-size:12px;color:var(--text-secondary);">需改进</div>
       </div>
     </div>
     ${listHtml}
@@ -595,14 +538,12 @@ function renderResult() {
       <button class="restart-btn" onclick="resetAll()">重新开始</button>
     </div>
   </div>`;
-  // Animate counter numbers
   setTimeout(() => {
     animateCount('numClean', clean);
     animateCount('numIssues', issues);
   }, 100);
   clearState();
 }
-
 function markPass(layerIdx, itemIdx) {
   state.improvements = state.improvements.filter(imp => imp.layer !== (layerIdx+'-'+itemIdx));
   state.improvements.push({ layer:layerIdx+'-'+itemIdx, itemIndex:itemIdx, text:'' });
@@ -650,16 +591,16 @@ function resetAll() {
 function exportResult() {
   const issues = state.improvements.filter(i => i.text);
   if (!issues.length) { alert('全部通过，无需导出。'); return; }
-  let text = '# 无穷追问 改进清单\n\n';
+  let text = '# persistent-asking checklist\n\n';
   issues.forEach((imp,i) => {
     const layerId = imp.layer.split('-')[0];
     const layer = state.layers.find(l => l.id === layerId);
     const tag = layer ? (layer.short||layer.label) : layerId;
     const pri = layer ? (layer.priority||'p2') : 'p2';
-    const priLabel = pri === 'p0' ? '必改' : pri === 'p1' ? '建议改' : '可选改';
+    const priLabel = pri === 'p0' ? 'must-fix' : pri === 'p1' ? 'should-fix' : 'could-fix';
     text += (i+1) + '. [' + priLabel + '][' + tag + '] ' + imp.text + '\n';
   });
-  text += '\n--\n无穷追问 \u00B7 persistent-asking';
+  text += '\n--\npersistent-asking \u00B7 无穷追问';
   const blob = new Blob([text], { type:'text/plain;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -667,9 +608,7 @@ function exportResult() {
   a.click();
   URL.revokeObjectURL(a.href);
 }
-
 showScreen('screenHome');
 </script>
-
 </body>
 </html>
